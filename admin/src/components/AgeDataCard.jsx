@@ -64,8 +64,8 @@ const AgeDataCard = () => {
           <div className='w-[65%] h-[50vh] bg-zinc-900 border border-zinc-800 rounded-3xl p-6'>
                <div className='w-full flex justify-between items-center px-4'>
                     <span className='flex flex-col text-zinc-200'>
-                         <p className='font-medium text-xl'>Total visitors</p>
-                         <p className='text-sm opacity-[.56]'>Total visitors for past {`3 months`}</p>
+                         <p className='font-medium text-xl'>Age group</p>
+                         <p className='text-sm opacity-[.56]'>Age group of patentients for past {`3 months`}</p>
                     </span>
                     <span className='w-[450px] h-[45px] bg-zinc-900 flex rounded-2xl text-zinc-200 font-medium'>
                          <button className={`w-[150px] border-r-2 border-zinc-800 rounded-l-2xl ${ageDataTime === "Last 3 months" ? "bg-zinc-800" : "bg-transparent"} transition-all duration-200`} onClick={() => ageDataTimeHandler("Last 3 months")}>Last 3 months</button>

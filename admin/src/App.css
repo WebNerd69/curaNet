@@ -1,18 +1,18 @@
 ::-webkit-scrollbar {
-     width: 12px;              /* width of the scrollbar */
-     height: 12px;             /* height for horizontal scrollbar */
-   }
-   
-   ::-webkit-scrollbar-track {
-     background: #181818;      /* track background */
-   }
-   
-   ::-webkit-scrollbar-thumb {
-     background: linear-gradient(180deg, #49197D, #181818); /* custom gradient */
-     border-radius: 10px;      /* round edges */
-   }
-   
-   ::-webkit-scrollbar-thumb:hover {
-     background: linear-gradient(180deg, #49197D, #49197da3); /* hover effect */
-   }
-   
+  width: 12px; /* width of the scrollbar */
+  height: 12px; /* height for horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #181818; /* track background */
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #49197d, #181818); /* custom gradient */
+  border-radius: 10px; /* round edges */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #49197d, #49197da3); /* hover effect */
+}
+

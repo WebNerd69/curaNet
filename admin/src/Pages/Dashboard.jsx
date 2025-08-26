@@ -12,7 +12,7 @@ const Dashboard = () => {
   return (
     <div className='w-full h-full relative flex flex-col items-center py-3 gap-10'>
       <div className='w-full h-[30vh] py-6 flex gap-5'>
-        <NumberCard heading={"Total revenue"} trend={"up"} trendPercent={12.6} body={69420} lowText={"Revenue this month"}/>
+        <NumberCard heading={"Total revenue"} trend={"up"} trendPercent={12.6} body={'₹69420'} lowText={"Revenue this month"}/>
         <NumberCard heading={"Total patients"} trend={"down"} trendPercent={6} body={120} lowText={"Patients this month"}/>
         <NumberCard heading={"Average patients per day"} trend={"down"} trendPercent={3} body={15} lowText={"Patients this month"}/>
         <NumberCard heading={"Emergency cases"} trend={"up"} trendPercent={6.8} body={8} lowText={"Emergency cases this month"}/>
