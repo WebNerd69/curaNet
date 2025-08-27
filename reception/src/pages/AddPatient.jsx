@@ -1,0 +1,197 @@
+import React, { useEffect, useState } from 'react'
+import { useForm } from "react-hook-form";
+
+const AddPatient = () => {
+  // react-hook-forms
+  const { register, handleSubmit, formState: { errors, isValid, isSubmitting }, setValue } = useForm(
+    {
+      mode: "onChange",   // validates while typing
+      reValidateMode: "onChange", // re-checks on every change
+    }
+  );
+
+  // submit function
+  const submit = (e) => {
+    console.log(e)
+
+  }
+
+  // variables
+  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const namePattern = /^[A-Za-z]+(?: [A-Za-z]+)*$/;
+  const phonePattern = /^[0-9]{10}$/;
+  const agePattern = /^[0-9]{1,3}$/;
+  return (
+    <div className='w-full h-full relative flex items-center justify-center text-zinc-200'>
+      <div className='w-[40%] h-[75%] bg-zinc-950 border-2 border-zinc-800 rounded-3xl p-5'>
+        {/* title */}
+        <div className='w-full h-24 px-10 py-3 font-semibold text-2xl'>
+          <p>Add new Patient</p>
+          <p className='text-sm font-normal opacity-[.56]'>the fields marked with " * " are required</p>
+        </div>
+        <form onSubmit={handleSubmit(submit)} className='w-full flex-col flex gap-5 items-center'>
+          {/* name of the Patient */}
+          <div className='w-[80%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
+            <label htmlFor="name" className='absolute text-sm -top-3 opacity-[.56]'>Name *</label>
+            <input
+              {...register("name", {
+                required: "Name is required",
+                minLength: {
+                  value: 3,
+                  message: "Name must be at least 3 characters",
+                },
+                maxLength: {
+                  value: 50,
+                  message: "Name must be less than 50 characters",
+                },
+                pattern: {
+                  value: namePattern,
+                  message: "Name can only contain letters and spaces",
+                },
+              })}
+              id="name"
+              type="text"
+              className="bg-transparent w-full outline-none"
+              placeholder="Rudra Pratap Roy"
+            />
+          </div>
+          {errors.name ? <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.name.message}</p> : <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>This is the display name of the patient</p>}
+
+          {/* patient email */}
+          <div className='w-[80%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
+            <label htmlFor="email" className='absolute text-sm -top-3 opacity-[.56]'>Email</label>
+            <input
+              {...register("email", {
+                required: "Email is required",
+                minLength: {
+                  value: 15,
+                  message: "Email must be at least 15 characters",
+                },
+                maxLength: {
+                  value: 50,
+                  message: "Email must be less than 50 characters",
+                },
+                pattern: {
+                  value: emailPattern,
+                  message: "Email can only contain letters and spaces",
+                },
+              })}
+              id='email'
+              type='email'
+              className='bg-transparent w-full outline-none '
+              placeholder='rroy64330@gmail.com' />
+          </div>
+
+          {/* patient phone */}
+          <div className='w-[80%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
+            <label htmlFor="phone" className='absolute text-sm -top-3 opacity-[.56]'>Phone *</label>
+            <input
+              {...register("phone", {
+                required: "Phone number is required",
+                minLength: {
+                  value: 10,
+                  message: "Phone number must be at 10 digits",
+                },
+                maxLength: {
+                  value: 10,
+                  message: "Phone number must be 10 digits",
+                },
+                pattern: {
+                  value: phonePattern,
+                  message: "Phone number can only contain numbers",
+                },
+              })}
+              id='phone'
+              className='bg-transparent w-full outline-none '
+              type='tel'
+              placeholder='9775270246' />
+          </div>
+          {errors.phone ? <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.phone.message}</p> : <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>Active phone number</p>}
+
+          <div className='w-[80%] flex gap-4 justify-between'>
+            {/* patient gender */}
+            <div className='w-[33%] flex justify-center px-5 py-3  bg-zinc-900 border-2 border-zinc-800 rounded-xl cursor-pointer relative'>
+              <label htmlFor="gender" className='absolute text-sm -top-3 opacity-[.56] left-5'>Gender *</label>
+              <select {...register("gender")} className='bg-transparent outline-none px-5 cursor-pointer '>
+                <option value="male" className='bg-zinc-900 border-zinc-800 '>male</option>
+                <option value="female" className='bg-zinc-900 border-zinc-800 '>female</option>
+                <option value="other" className='bg-zinc-900 border-zinc-800 '>other</option>
+              </select>
+            </div>
+            {/* blood group */}
+            <div className='w-[33%] flex justify-center px-5 py-3  bg-zinc-900 border-2 border-zinc-800 rounded-xl cursor-pointer relative'>
+              <label htmlFor="blood-group" className='absolute text-sm -top-3 opacity-[.56] left-5'>Blood Group *</label>
+              <select {...register("blood-group")} className='bg-transparent outline-none px-5 cursor-pointer '>
+                <option value="A+" className='bg-zinc-900 border-zinc-800 '>A+</option>
+                <option value="B+" className='bg-zinc-900 border-zinc-800 '>B+</option>
+                <option value="AB+" className='bg-zinc-900 border-zinc-800 '>AB+</option>
+                <option value="O+" className='bg-zinc-900 border-zinc-800 '>O+</option>
+                <option value="A-" className='bg-zinc-900 border-zinc-800 '>A-</option>
+                <option value="B-" className='bg-zinc-900 border-zinc-800 '>B-</option>
+                <option value="AB-" className='bg-zinc-900 border-zinc-800 '>AB-</option>
+                <option value="O-" className='bg-zinc-900 border-zinc-800 '>O-</option>
+              </select>
+            </div>
+
+            <div className='w-[33%] px-5 py-3 flex items-center justify-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
+              <label htmlFor="age" className='absolute text-sm -top-3 opacity-[.56]'>Age *</label>
+              <input
+                {...register("age", {
+                  required: "Age is required",
+                  minLength: {
+                    value: 1,
+                    message: "Age must be at least 1 digits",
+                  },
+                  maxLength: {
+                    value: 2,
+                    message: "Age must be at most 2 digits",
+                  },
+                  pattern: {
+                    value: agePattern,
+                    message: "Age can only contain numbers",
+                  },
+                })}
+                id='phone'
+                className='bg-transparent w-full outline-none '
+                type='number'
+                placeholder='14' />
+            </div>
+          </div>
+          {/* Textarea */}
+          <div className='w-[80%] h-[15vh] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
+            <label htmlFor="address" className='absolute text-sm -top-3 opacity-[.56]'>Patient's address *</label>
+            <textarea
+              {...register("address", {
+                required: "patient's address is required",
+                minLength: {
+                  value: 25,
+                  message: "Patient's address must be at least 25 characters",
+                },
+                maxLength: {
+                  value: 500,
+                  message: "Patient's address must be less than 500 characters",
+                },
+              })}
+              className="bg-transparent w-full h-full outline-none resize-none"
+              placeholder="Enter the patient's address in not more than 500 characters."
+              id="address"
+            />
+          </div>
+          {errors.address && <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.address.message}</p>}
+
+          {/* submit button */}
+          <button
+            type="submit"
+            className='px-7 py-3 border border-zinc-800 rounded-xl font-semibold cursor-pointer disabled:opacity-[.56] disabled:cursor-not-allowed'
+            disabled={!isValid || isSubmitting}
+          >
+            {isSubmitting ? "Adding patient ..." : "Add patient"}
+          </button>
+        </form>
+      </div>
+
+    </div>
+  )
+}
+
+export default AddPatient
