@@ -1,6 +1,7 @@
 html{
   background-color: #181818;
   color: #ffffff;
+  overflow-x: hidden;
 }
 ::-webkit-scrollbar {
   width: 12px; /* width of the scrollbar */
@@ -18,4 +19,10 @@ html{
 
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #49197d, #49197da3); /* hover effect */
+}
+
+/* Chrome, Edge, Safari */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1); /* inverts color → white if on dark bg */
+  cursor: pointer;
 }

@@ -108,7 +108,7 @@ const Sidebar = () => {
                          <span className='font-medium'>See Bed Availability</span>
                     </NavLink>
 
-                    <NavLink to={'/patient/assign-bed'} className={({isActive})=> isActive? 'w-full flex items-center gap-3 rounded-xl px-2 py-3 hover:bg-zinc-800 cursor-pointer text-[#BC37F5]' :'w-full flex items-center gap-3 rounded-xl px-2 py-3 hover:bg-zinc-800 cursor-pointer text-zinc-200'}>
+                    <NavLink to={'/beds/assign'} className={({isActive})=> isActive? 'w-full flex items-center gap-3 rounded-xl px-2 py-3 hover:bg-zinc-800 cursor-pointer text-[#BC37F5]' :'w-full flex items-center gap-3 rounded-xl px-2 py-3 hover:bg-zinc-800 cursor-pointer text-zinc-200'}>
                          <BedSingle className='w-6 h-6' />
                          <span className='font-medium'>Assign Bed</span>
                     </NavLink>

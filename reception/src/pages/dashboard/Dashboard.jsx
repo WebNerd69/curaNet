@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
-import NumberCard from '../components/NumberCard'
-import TableStaff from '../components/TableStaff'
-import { ReceptionContext } from '../context/ReceptionContext'
+import NumberCard from '../../components/NumberCard'
+import TableStaff from '../../components/TableStaff'
+import { ReceptionContext } from '../../context/ReceptionContext'
 
 const Dashboard = () => {
   const {doctorList} = useContext(ReceptionContext)

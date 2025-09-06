@@ -23,7 +23,7 @@ const AddPatient = () => {
   const agePattern = /^[0-9]{1,3}$/;
   return (
     <div className='w-full h-full relative flex items-center justify-center text-zinc-200'>
-      <div className='w-[40%] h-[75%] bg-zinc-950 border-2 border-zinc-800 rounded-3xl p-5'>
+      <div className='w-[40%] h-[85%] bg-zinc-950 border-2 border-zinc-800 rounded-3xl p-5'>
         {/* title */}
         <div className='w-full h-24 px-10 py-3 font-semibold text-2xl'>
           <p>Add new Patient</p>
@@ -108,6 +108,31 @@ const AddPatient = () => {
           </div>
           {errors.phone ? <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.phone.message}</p> : <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>Active phone number</p>}
 
+          <div className='w-[80%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
+            <label htmlFor="emergency-phone" className='absolute text-sm -top-3 opacity-[.56]'>Emergency phone</label>
+            <input
+              {...register("emergencyPhone", {
+                required: "Phone number is required",
+                minLength: {
+                  value: 10,
+                  message: "Phone number must be at 10 digits",
+                },
+                maxLength: {
+                  value: 10,
+                  message: "Phone number must be 10 digits",
+                },
+                pattern: {
+                  value: phonePattern,
+                  message: "Phone number can only contain numbers",
+                },
+              })}
+              id='emergency-phone'
+              className='bg-transparent w-full outline-none '
+              type='tel'
+              placeholder='9775270246' />
+          </div>
+          {errors.emergencyPhone ? <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.emergencyPhone.message}</p> : <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>Emergency phone number</p>}
+
           <div className='w-[80%] flex gap-4 justify-between'>
             {/* patient gender */}
             <div className='w-[33%] flex justify-center px-5 py-3  bg-zinc-900 border-2 border-zinc-800 rounded-xl cursor-pointer relative'>
@@ -121,7 +146,7 @@ const AddPatient = () => {
             {/* blood group */}
             <div className='w-[33%] flex justify-center px-5 py-3  bg-zinc-900 border-2 border-zinc-800 rounded-xl cursor-pointer relative'>
               <label htmlFor="blood-group" className='absolute text-sm -top-3 opacity-[.56] left-5'>Blood Group *</label>
-              <select {...register("blood-group")} className='bg-transparent outline-none px-5 cursor-pointer '>
+              <select {...register("bloodGroup")} className='bg-transparent outline-none px-5 cursor-pointer '>
                 <option value="A+" className='bg-zinc-900 border-zinc-800 '>A+</option>
                 <option value="B+" className='bg-zinc-900 border-zinc-800 '>B+</option>
                 <option value="AB+" className='bg-zinc-900 border-zinc-800 '>AB+</option>

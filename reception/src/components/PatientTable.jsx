@@ -7,23 +7,19 @@ const PatientTable = ({ patientData }) => {
      const [filterOpen, setFilterOpen] = useState(true)
      const [filteredData, setFilteredData] = useState(patientData);
 
-     const nameFilter = watch("name", "");
-     const statusFilter = watch("status", "");
+     const idFilter = watch("_id", "");
+
 
      // toggle checkbox
 
      // filtering logic
      const filterData = () => {
           return patientData.filter((patient) => {
-               const matchName = nameFilter
-                    ? patient.name.toLowerCase().includes(nameFilter.toLowerCase())
+               const matchId = idFilter
+                    ? patient._id.toLowerCase().includes(idFilter.toLowerCase())
                     : true;
 
-               const matchStatus = statusFilter
-                    ? patient.status.toLowerCase() === statusFilter.toLowerCase()
-                    : true;
-
-               return matchName && matchStatus;
+               return matchId;
           });
      };
 
@@ -31,7 +27,7 @@ const PatientTable = ({ patientData }) => {
      useEffect(() => {
           setFilteredData(filterData());
           // console.log(filterData())
-     }, [nameFilter, statusFilter]);
+     }, [idFilter]);
 
 
      const handleFilterToggle = () => {
@@ -46,55 +42,52 @@ const PatientTable = ({ patientData }) => {
                          Filters
                          <ListFilter className={`text-[#BC37F5] w-4 h-4 opacity-[.56] group-hover:opacity-100`} />
                     </button>
-                    <div className={`flex w-[50%] justify-between items-center ${filterOpen ? "block" : "hidden"} `}>
-                         <div className='w-[30%] flex justify-center items-center px-5 py-1  bg-zinc-900 border-2 border-zinc-800 rounded-xl cursor-pointer text-zinc-300 '>
-                              <select {...register("status")} className='bg-transparent outline-none px-3 cursor-pointer' defaultValue={""}>
-                                   <option value="" className='bg-zinc-900 border-zinc-800 '>All</option>
-                                   <option value="pending" className='bg-zinc-900 border-zinc-800 '>pending</option>
-                                   <option value="on-going" className='bg-zinc-900 border-zinc-800 '>on-going</option>
-                                   <option value="completed" className='bg-zinc-900 border-zinc-800 '>completed</option>
-                              </select>
-                         </div>
-                         <div className='w-[60%] px-5 py-1 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
+                    <div className={`flex w-[30%] justify-between items-center ${filterOpen ? "block" : "hidden"} `}>
+                         
+                         <div className='w-[100%] px-5 py-1 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
                               <input
-                                   {...register("name")}
-                                   id="name"
+                                   {...register("_id")}
+                                   id="_id"
                                    type="text"
                                    className="bg-transparent w-full outline-none"
-                                   placeholder="search..."
+                                   placeholder="patient id"
                               />
                          </div>
                     </div>
 
                </div>
                {/* header */}
-               <div className={`grid w-full grid-cols-[1fr_1.5fr_.5fr_1fr_.7fr_1fr_1fr_.7fr_.8fr] gap-1 text-zinc-400 h-10 items-center`}>
+               <div className={`grid w-full grid-cols-[1fr_1.5fr_.5fr_.7fr_1fr_1.3fr_1fr_1fr] gap-1 text-zinc-400 h-10 items-center z-0`}>
                     <p className='px-3 opacity-[.56] text-sm font-medium'>ID</p>
                     <p className='px-3 opacity-[.56] text-sm font-medium'>NAME</p>
                     <p className='px-3 opacity-[.56] text-sm font-medium'>AGE</p>
                     <p className='px-3 opacity-[.56] text-sm font-medium'>GENDER</p>
-                    <p className='px-3 opacity-[.56] text-sm font-medium'>BED</p>
-                    <p className='px-3 opacity-[.56] text-sm font-medium'>DOCTOR</p>
-                    <p className='px-3 opacity-[.56] text-sm font-medium'>TIME</p>
-                    <p className='px-3 opacity-[.56] text-sm font-medium'>STATUS</p>
-                    <p className='px-3 opacity-[.56] text-sm font-medium'>CASE</p>
+                    <p className='px-3 opacity-[.56] text-sm font-medium'>BLOOD GROUP</p>
+                    <p className='px-3 opacity-[.56] text-sm font-medium'>EMAIL</p>
+                    <p className='px-3 opacity-[.56] text-sm font-medium'>PHONE</p>
+                    <p className='px-3 opacity-[.56] text-sm font-medium'>EMERGENCY CON.</p>
+
                </div>
                {/* body */}
                <div className='w-full h-full relative overflow-y-scroll flex flex-col gap-y-7 text-zinc-300 py-5 '>
                     {filteredData.map((patient) => (
                          <div
                               key={patient.id}
-                              className="grid w-full grid-cols-[1fr_1.5fr_.5fr_1fr_.7fr_1fr_1fr_.7fr_.8fr] gap-1 h-10 items-center"
+                              className="grid w-full grid-cols-[1fr_1.5fr_.5fr_.7fr_1fr_1.3fr_1fr_1fr] gap-1 h-10 items-center hover:bg-zinc-800 transition-all duration-150 cursor-default relative group "
                          >
-                              <p className="px-3 text-zinc-400 ">{patient.id}</p>
+                              <p className="px-3 text-zinc-400 ">{patient._id}</p>
                               <p className="px-4 ">{patient.name}</p>
                               <p className="px-4 text-zinc-400 ">{patient.age}</p>
                               <p className="px-4 text-zinc-400 ">{patient.gender}</p>
-                              <p className="px-4 text-zinc-400 ">{patient.bed}</p>
-                              <p className="px-4 ">{patient.doctor}</p>
-                              <p className="px-4 ">{patient.time}</p>
-                              <p className="px-4 text-zinc-400 ">{patient.status}</p>
-                              <p className="px-4 text-zinc-400 ">{patient.case}</p>
+                              <p className="px-4 text-zinc-400 ">{patient.bloodGroup}</p>
+                              <p className={`px-4 ${patient.email? "text-zinc-300":"text-zinc-400"}`}>{patient.email ? patient.email :"Not Given"}</p>
+                              <p className="px-4 ">{patient.phone}</p>
+                              <p className="px-4 text-zinc-400 ">{patient.emergencyContact}</p>
+
+                              {/* hover details */}
+                              <div className='w-[20vw] h-[7vh] bg-[#9e9e9e3b] rounded-3xl group-hover:flex hidden z-10 absolute backdrop-blur-md right-0 top-12 px-5 py-3 items-center justify-center'>
+                                   <p className='text-sm text-zinc-300'>{patient.address}</p>
+                              </div>
                          </div>
                     ))}
 
