@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from "react-hook-form";
 const AddStaff = () => {
   // react-hook-forms
-  const { register, handleSubmit, formState: { errors, isValid , isSubmitting } ,setValue } = useForm(
+  const { register, handleSubmit, formState: { errors, isValid, isSubmitting }, setValue } = useForm(
     {
       mode: "onChange",   // validates while typing
       reValidateMode: "onChange", // re-checks on every change
@@ -18,11 +18,11 @@ const AddStaff = () => {
 
   }
 
-    // Reset specialization when disabled
+  // Reset specialization when disabled
   useEffect(() => {
     if (disableSpecialization) {
       setValue("specialization", ""); // set to null/empty string
-    }else{
+    } else {
       setValue("specialization", "general physician"); // set to default value
     }
   }, [disableSpecialization, setValue]);
@@ -102,7 +102,7 @@ const AddStaff = () => {
               className='bg-transparent w-full outline-none '
               placeholder='rroy64330@gmail.com' />
           </div>
-          
+
           {/* staff phone */}
           <div className='w-[80%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
             <label htmlFor="phone" className='absolute text-sm -top-3 opacity-[.56]'>Phone</label>
@@ -153,12 +153,12 @@ const AddStaff = () => {
 
           {/* doctor specialization */}
           <div className='w-[80%] flex justify-center py-3 px-5 bg-zinc-900 border-2 border-zinc-800 rounded-xl cursor-pointer'>
-            <select 
-            {...register("specialization")}
-             className='bg-transparent outline-none px-7 w-full cursor-pointer disabled:cursor-not-allowed'
+            <select
+              {...register("specialization")}
+              className='bg-transparent outline-none px-7 w-full cursor-pointer disabled:cursor-not-allowed'
               disabled={disableSpecialization}
               defaultValue={"general physician"}
-              >
+            >
               <option value="general physician" className='bg-zinc-900 border-zinc-800'>General Physician</option>
               <option value="cardiologist" className='bg-zinc-900 border-zinc-800'>Cardiologist</option>
               <option value="neurologist" className='bg-zinc-900 border-zinc-800'>Neurologist</option>
@@ -179,7 +179,7 @@ const AddStaff = () => {
             className='px-7 py-3 border border-zinc-800 rounded-xl font-semibold cursor-pointer disabled:opacity-[.56] disabled:cursor-not-allowed'
             disabled={!isValid || isSubmitting}
           >
-            {isSubmitting ?"Adding Staff ...":"Add Staff"}
+            {isSubmitting ? "Adding Staff ..." : "Add Staff"}
           </button>
         </form>
       </div>
