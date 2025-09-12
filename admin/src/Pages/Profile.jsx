@@ -22,11 +22,8 @@ const Profile = () => {
 
     return (
         <div className='w-full h-full flex items-center justify-center text-zinc-200 relative flex-col gap-y-10'>
-            <div className='w-32 h-32 flex items-center justify-center from-[#49197D] to-[#49197d5b] bg-gradient-to-br rounded-full text-6xl'>
-                R
-            </div>
             <div className='w-[50%] h-[40%] border-2 rounded-3xl flex flex-col border-zinc-800 justify-center items-center'>
-                <p className='text-xl py-5 h-[20%]'>Profile Settings</p>
+                <p className='text-3xl py-5 h-[20%] font-medium'>Profile</p>
                 <form onSubmit={handleSubmit(submit)} className='w-full h-[60%] flex-col flex gap-6 items-center '>
 
                     <div className='w-[80%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>

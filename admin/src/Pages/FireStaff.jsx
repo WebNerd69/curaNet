@@ -21,7 +21,7 @@ const FireStaff = () => {
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   return (
     <div className='w-full h-full relative flex items-center justify-center text-zinc-200'>
-      <div className='w-[50%] h-[70%] bg-zinc-950 border-2 border-zinc-800 rounded-3xl p-5'>
+      <div className='w-[40%] h-[70%] bg-zinc-950 border-2 border-zinc-800 rounded-3xl p-5'>
         {/* title */}
         <div className='w-full h-24 px-10 py-3 font-semibold text-2xl'>
           <p>Fire staff</p>
@@ -31,7 +31,7 @@ const FireStaff = () => {
         {/* form */}
         <form onSubmit={handleSubmit(submit)} className='w-full h-[80%] flex-col flex gap-5 items-center'>
           {/* Name */}
-          <div className='w-[60%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
+          <div className='w-[80%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
             <label htmlFor="name" className='absolute text-sm -top-3 opacity-[.56]'>Name</label>
             <input
               {...register("name", {
@@ -56,12 +56,12 @@ const FireStaff = () => {
             />
           </div>
           {errors.name
-            ? <p className='text-sm text-red-500 -mt-3 w-[60%]'>{errors.name.message}</p>
-            : <p className='text-sm opacity-[.56] -mt-3 w-[60%]'>This is the display name</p>
+            ? <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.name.message}</p>
+            : <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>This is the display name</p>
           }
 
           {/* Email */}
-          <div className='w-[60%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
+          <div className='w-[80%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
             <label htmlFor="email" className='absolute text-sm -top-3 opacity-[.56]'>Email</label>
             <input
               {...register("email", {
@@ -86,12 +86,12 @@ const FireStaff = () => {
             />
           </div>
           {errors.email
-            ? <p className='text-sm text-red-500 -mt-3 w-[60%]'>{errors.email.message}</p>
-            : <p className='text-sm opacity-[.56] -mt-3 w-[60%]'>Work email</p>
+            ? <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.email.message}</p>
+            : <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>Work email</p>
           }
 
           {/* Textarea */}
-          <div className='w-[60%] h-[50%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
+          <div className='w-[80%] h-[50%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
             <label htmlFor="fire" className='absolute text-sm -top-3 opacity-[.56]'>Reason for termination</label>
             <textarea
               {...register("fire", {
@@ -110,7 +110,7 @@ const FireStaff = () => {
               id="fire"
             />
           </div>
-          {errors.fire && <p className='text-sm text-red-500 -mt-3 w-[60%]'>{errors.fire.message}</p>}
+          {errors.fire && <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.fire.message}</p>}
 
 
           {/* submit button */}

@@ -20,7 +20,7 @@ const ProfileSetting = () => {
      const phonePattern = /^[0-9]{10}$/;
      return (
           <div className='w-[50%] h-[40%] border-2 rounded-3xl flex flex-col border-zinc-800 justify-center items-center text-zinc-200'>
-               <p className='text-xl py-5'>Profile Settings</p>
+               <p className='text-2xl py-5 font-medium'>Profile Settings</p>
                <form onSubmit={handleSubmit(submit)} className='w-full flex-col flex gap-6 items-center '>
 
                     <div className='w-[80%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
@@ -49,7 +49,7 @@ const ProfileSetting = () => {
                               
                          />
                     </div>
-                    {errors.name ? <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.name.message}</p> : <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>Display name</p>}
+                    {errors.name ? <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.name.message}</p> : <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>Change display name</p>}
 
                     <div className='w-[80%] flex justify-between items-center gap-x-5'>
 
@@ -82,7 +82,7 @@ const ProfileSetting = () => {
                                    />
 
                               </div>
-                              {errors.email ? <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.email.message}</p> : <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>Work email</p>}
+                              {errors.email ? <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.email.message}</p> : <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>Change work email</p>}
 
                          </div>
                          <div className='w-full flex flex-col gap-y-5'>
@@ -112,7 +112,7 @@ const ProfileSetting = () => {
 
                                    />
                               </div>
-                              {errors.phone ? <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.phone.message}</p> : <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>Active phone number</p>}
+                              {errors.phone ? <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.phone.message}</p> : <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>Change active phone number</p>}
 
                          </div>
                     </div>

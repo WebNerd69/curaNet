@@ -44,7 +44,7 @@ const AddStaff = () => {
 
   return (
     <div className='w-full h-full relative flex items-center justify-center text-zinc-200'>
-      <div className='w-[50%] h-[70%] bg-zinc-950 border-2 border-zinc-800 rounded-3xl p-5'>
+      <div className='w-[40%] h-[70%] bg-zinc-950 border-2 border-zinc-800 rounded-3xl p-5'>
         {/* title */}
         <div className='w-full h-24 px-10 py-3 font-semibold text-2xl'>
           <p>Add new staff</p>
@@ -52,7 +52,7 @@ const AddStaff = () => {
         </div>
         <form onSubmit={handleSubmit(submit)} className='w-full flex-col flex gap-5 items-center'>
           {/* name of the staff */}
-          <div className='w-[60%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
+          <div className='w-[80%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
             <label htmlFor="name" className='absolute text-sm -top-3 opacity-[.56]'>Name</label>
             <input
               {...register("name", {
@@ -76,10 +76,10 @@ const AddStaff = () => {
               placeholder="Rudra Pratap Roy"
             />
           </div>
-          {errors.name ? <p className='text-sm text-red-500 -mt-3 w-[60%]'>{errors.name.message}</p> : <p className='text-sm opacity-[.56] -mt-3 w-[60%]'>This is the display name</p>}
+          {errors.name ? <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.name.message}</p> : <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>This is the display name</p>}
 
           {/* staff email */}
-          <div className='w-[60%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
+          <div className='w-[80%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
             <label htmlFor="email" className='absolute text-sm -top-3 opacity-[.56]'>Email</label>
             <input
               {...register("email", {
@@ -102,10 +102,9 @@ const AddStaff = () => {
               className='bg-transparent w-full outline-none '
               placeholder='rroy64330@gmail.com' />
           </div>
-          c
-
+          
           {/* staff phone */}
-          <div className='w-[60%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
+          <div className='w-[80%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
             <label htmlFor="phone" className='absolute text-sm -top-3 opacity-[.56]'>Phone</label>
             <input
               {...register("phone", {
@@ -128,10 +127,10 @@ const AddStaff = () => {
               type='tel'
               placeholder='9775270246' />
           </div>
-          {errors.phone ? <p className='text-sm text-red-500 -mt-3 w-[60%]'>{errors.phone.message}</p> : <p className='text-sm opacity-[.56] -mt-3 w-[60%]'>Active phone number</p>}
+          {errors.phone ? <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.phone.message}</p> : <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>Active phone number</p>}
 
           {/* staff gender */}
-          <div className='w-[60%] flex gap-4 justify-between'>
+          <div className='w-[80%] flex gap-4 justify-between'>
             <div className='w-[50%] flex justify-center px-5 py-3  bg-zinc-900 border-2 border-zinc-800 rounded-xl cursor-pointer'>
               <select {...register("gender")} className='bg-transparent outline-none px-10 cursor-pointer '>
                 <option value="male" className='bg-zinc-900 border-zinc-800 '>male</option>
@@ -153,7 +152,7 @@ const AddStaff = () => {
           </div>
 
           {/* doctor specialization */}
-          <div className='w-[60%] flex justify-center py-3 px-5 bg-zinc-900 border-2 border-zinc-800 rounded-xl cursor-pointer'>
+          <div className='w-[80%] flex justify-center py-3 px-5 bg-zinc-900 border-2 border-zinc-800 rounded-xl cursor-pointer'>
             <select 
             {...register("specialization")}
              className='bg-transparent outline-none px-7 w-full cursor-pointer disabled:cursor-not-allowed'
@@ -172,7 +171,7 @@ const AddStaff = () => {
               <option value="ophthalmologist" className='bg-zinc-900 border-zinc-800'>Ophthalmologist</option>
             </select>
           </div>
-          <p className='text-sm opacity-[.56] -mt-3 w-[60%]'>Doctor's specialzation</p>
+          <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>Doctor's specialzation</p>
 
           {/* submit button */}
           <button
