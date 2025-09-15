@@ -20,11 +20,11 @@ export const updateUser = async (req, res) => {
                { new: true }
           );
           if (!updatedUser) {
-               return res.status(404).json({ message: "User not found" });
+               return res.status(404).json({success:false ,  message: "User not found" });
           }
-          res.status(200).json(updatedUser);
+          res.status(200).json({success:true , updatedUser});
      } catch (error) {
-          res.status(400).json({ message: error.message });
+          res.status(400).json({ success:false , message: error.message });
      }
 };
 
@@ -33,11 +33,11 @@ export const getUserById = async (req, res) => {
      try {
           const user = await userModel.findById(req.params.id);
           if (!user) {
-               return res.status(404).json({ message: "User not found" });
+               return res.status(404).json({ success:false , message: "User not found" });
           }
-          res.status(200).json(user);
+          res.status(200).json({success:true , user});
      } catch (error) {
-          res.status(400).json({ message: error.message });
+          res.status(400).json({success:false, message: error.message });
      }
 };
 // Get user by email
@@ -97,36 +97,22 @@ export const addBilling = async (req, res) => {
      }
 };
 
-// // Update user profile
-// export const updateUserProfile = async (req, res) => {
-//      try {
-//           const updatedUser = await userModel.findByIdAndUpdate(
-//                req.params.id,
-//                { 
-//                     $set: {
-//                          name: req.body.name,
-//                          email: req.body.email,
-//                          phone: req.body.phone,
-//                          address: req.body.address
-//                     }
-//                },
-//                { new: true }
-//           );
-//           if (!updatedUser) {
-//                return res.status(404).json({ 
-//                     success: false,
-//                     message: "User not found"
-//                });
-//           }
-//           res.status(200).json({
-//                success: true,
-//                message: "Profile updated successfully",
-//                data: updatedUser
-//           });
-//      } catch (error) {
-//           res.status(400).json({ 
-//                success: false,
-//                message: error.message
-//           });
-//      }
-// };
+export const checkOrCreateUser = async (req, res) => {
+  try {
+    const { email, name} = req.body;
+
+    let user = await userModel.findOne({ email });
+
+    if (!user) {
+      // First time login
+      user = new userModel({ email, name});
+      await user.save();
+      return res.status(201).json({success:true, message: "New user created", user });
+    }
+
+    // Returning user
+    return res.status(200).json({success:true, message: "User exists", user });
+  } catch (err) {
+    res.status(500).json({success:false, message: err.message });
+  }
+};

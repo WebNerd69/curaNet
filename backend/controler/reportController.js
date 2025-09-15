@@ -57,7 +57,7 @@ export const getUserReports = async (req, res) => {
           res.status(200).json({
                success: true,
                count: reports.length,
-               data: reports
+               reports
           });
      } catch (error) {
           res.status(400).json({
@@ -66,3 +66,18 @@ export const getUserReports = async (req, res) => {
           });
      }
 };
+
+// get report by id
+
+export const getReportById = async (req,res)=>{
+     try {
+          const {_id} = req.params
+          const report = await reportModel.findById(_id)
+          if (!report) {
+            res.json({success:false , message:"no reports"})    
+          }
+          res.status(200).json({success:true , report})
+     } catch (error) {
+          res.status(500).json({success:false , message:error.message})
+     }
+}

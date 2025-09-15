@@ -1,6 +1,9 @@
 import React from 'react'
+import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-
+import { UserContext } from '../../context/UserContext';
+import axios from 'axios'
+import { toast } from 'react-toastify';
 const BookAppointment = () => {
    // react-hook-forms
    const { register, handleSubmit, formState: { errors, isValid, isSubmitting }, setValue } = useForm(
@@ -9,10 +12,29 @@ const BookAppointment = () => {
          reValidateMode: "onChange", // re-checks on every change
       }
    );
-
+   const {BACKEND_URI , userData} = useContext(UserContext)
    // submit function
-   const submit = (e) => {
-      console.log(e)
+   const submit = async(e) => {
+      try {
+         const res = await axios.post(`${BACKEND_URI}appointment/create`,{
+            userId:userData._id,
+            userName:userData.name,
+            doctorName: e.doctor_name,
+            doctorId: e.id,
+            dateTime : e.date,
+            gender: userData.gender,
+            phone : userData.phone,
+            age : userData.age
+         })
+
+         console.log(res)
+         if(!res.data.success){
+            toast.error("Something went wrong")
+         }
+         toast.success("Appointment booked")
+      } catch (error) {
+         toast.error(error.message)
+      }
 
    }
 
@@ -22,14 +44,15 @@ const BookAppointment = () => {
    const phonePattern = /^[0-9]{10}$/;
    const agePattern = /^[0-9]{1,3}$/;
 
+
    const today = new Date().toISOString().split("T")[0];
    return (
       <div className='w-full h-[100vh] relative flex items-center justify-center text-white '>
 
-         <div className='md:w-[35%] w-[90%] md:h-[75%] h-[90%] bg-zinc-900 rounded-3xl flex items-center gap-10 flex-col justify-center'>
+         <div className='md:w-[35%] w-[90%] md:h-[50%] h-[90%] bg-zinc-900 rounded-3xl flex items-center gap-10 flex-col justify-center'>
             <h1 className='md:text-3xl text-xl font-semibold text-white text-center my-5'>Book Appointment</h1>
             <form onSubmit={handleSubmit(submit)} className='w-full flex-col flex gap-5 items-center'>
-               {/* name of the Patient */}
+               {/* name of the Patient
                <div className='w-[80%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
                   <label htmlFor="name" className='absolute text-sm -top-3 opacity-[.56]'>Name *</label>
                   <input
@@ -54,11 +77,11 @@ const BookAppointment = () => {
                      placeholder="Rudra Pratap Roy"
                   />
                </div>
-               {errors.name ? <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.name.message}</p> : <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>This is the display name of the patient</p>}
+               {errors.name ? <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.name.message}</p> : <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>This is the display name of the patient</p>} */}
 
                {/* patient id */}
                <div className='w-[80%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
-                  <label htmlFor="id" className='absolute text-sm -top-3 opacity-[.56]'>Patient ID *</label>
+                  <label htmlFor="id" className='absolute text-sm -top-3 opacity-[.56]'>Doctor ID *</label>
                   <input
                      {...register("id", {
                         required: "id is required"
@@ -66,10 +89,10 @@ const BookAppointment = () => {
                      id="id"
                      type="text"
                      className="bg-transparent w-full outline-none"
-                     placeholder="pat_a1b1c1"
+                     placeholder="doctor id"
                   />
                </div>
-               {errors.id ? <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.id.message}</p> : <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>patient ID</p>}
+               {errors.id ? <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.id.message}</p> : <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>doctor ID</p>}
 
                {/* name of the Patient */}
                <div className='w-[80%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
@@ -99,7 +122,7 @@ const BookAppointment = () => {
                {errors.doctor_name ? <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.doctor_name.message}</p> : <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>Doctor's name</p>}
 
                {/* patient phone */}
-               <div className='w-[80%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
+               {/* <div className='w-[80%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
                   <label htmlFor="phone" className='absolute text-sm -top-3 opacity-[.56]'>Phone *</label>
                   <input
                      {...register("phone", {
@@ -122,22 +145,22 @@ const BookAppointment = () => {
                      type='tel'
                      placeholder='9775270246' />
                </div>
-               {errors.phone ? <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.phone.message}</p> : <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>Active phone number</p>}
+               {errors.phone ? <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.phone.message}</p> : <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>Active phone number</p>} */}
 
 
                <div className='w-[80%] flex gap-4 justify-between'>
                   {/* patient gender */}
-                  <div className='w-[50%] flex justify-center px-5 py-3  bg-zinc-900 border-2 border-zinc-800 rounded-xl cursor-pointer relative'>
+                  {/* <div className='w-[50%] flex justify-center px-5 py-3  bg-zinc-900 border-2 border-zinc-800 rounded-xl cursor-pointer relative'>
                      <label htmlFor="gender" className='absolute text-sm -top-3 opacity-[.56] left-5'>Gender *</label>
                      <select {...register("gender")} className='bg-transparent outline-none px-5 cursor-pointer '>
                         <option value="male" className='bg-zinc-900 border-zinc-800 '>male</option>
                         <option value="female" className='bg-zinc-900 border-zinc-800 '>female</option>
                         <option value="other" className='bg-zinc-900 border-zinc-800 '>other</option>
                      </select>
-                  </div>
+                  </div> */}
 
                   {/* patient age */}
-                  <div className='w-[50%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
+                  {/* <div className='w-[50%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
                      <label htmlFor="age" className='absolute text-sm -top-3 opacity-[.56]'>Age *</label>
                      <input
                         {...register("age", {
@@ -159,7 +182,7 @@ const BookAppointment = () => {
                         className='bg-transparent w-full outline-none '
                         type='number'
                         placeholder='14' />
-                  </div>
+                  </div> */}
                </div>
 
                <div className='w-[80%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>

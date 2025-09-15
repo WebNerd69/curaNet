@@ -4,6 +4,7 @@ import userModel from '../models/userModel.js';
 export const createappointment = async (req, res) => {
      try {
           // const { userId , doctorId , dateTime , caseType} = req.body;
+          console.log(req.body)
           const appointment = new appointmentModel(req.body);
           const savedappointment = await appointment.save();
 
@@ -35,7 +36,8 @@ export const rescheduleappointment = async (req, res) => {
                _id,
                { 
                     dateTime: newDateTime,
-                    status: 'rescheduled'
+                    status: 'rescheduled',
+
                },
                { new: true }
           );

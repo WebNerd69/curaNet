@@ -1,6 +1,9 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
-
+import axios from "axios"
+import { useContext } from 'react';
+import { UserContext } from '../../context/UserContext';
+import { toast } from 'react-toastify';
 const RescheduleAppointment = () => {
   // react-hook-forms
   const { register, handleSubmit, formState: { errors, isValid, isSubmitting }, setValue } = useForm(
@@ -9,10 +12,25 @@ const RescheduleAppointment = () => {
       reValidateMode: "onChange", // re-checks on every change
     }
   );
-
+  const {BACKEND_URI} = useContext(UserContext)
   // submit function
-  const submit = (e) => {
-    console.log(e)
+  const submit = async(e) => {
+    try {
+      const res = await axios.put(`${BACKEND_URI}appointment/reschedule/${e.apt_id}`,
+        {
+          newDateTime : e.date
+        }
+      )
+      if(!res.data.success){
+        toast.error("Oops! something went weong")
+      }
+      else{
+        toast.success("Appointment rescheduled")
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error("OOPS! something went wrong")
+    }
 
   }
 
