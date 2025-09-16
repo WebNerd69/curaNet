@@ -1,7 +1,9 @@
 import { Eye, EyeClosed } from 'lucide-react';
 import React from 'react'
+import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-
+import { AdminContext } from '../context/AdminContext';
+import { useAuth0 } from '@auth0/auth0-react';
 const Profile = () => {
     const { register, handleSubmit, formState: { errors, isValid, isSubmitting }, setValue } = useForm(
         {
@@ -10,7 +12,7 @@ const Profile = () => {
         }
     );
 
-
+    const {userData} = useContext(AdminContext)
 
     const submit = (data) => {
         console.log(data)
@@ -48,7 +50,7 @@ const Profile = () => {
                             type="text"
                             className="bg-transparent w-full outline-none"
                             placeholder="Rudra Pratap Roy"
-                            value={'Rudra Pratap Roy'}
+                            value={userData.name?userData.name:""}
                             disabled
                         />
                     </div>
@@ -80,7 +82,7 @@ const Profile = () => {
                                     type='email'
                                     className='bg-transparent w-full outline-none '
                                     placeholder='rroy64330@gmail.com'
-                                    value={'rroy64330@gmail.com'}
+                                    value={userData.email?userData.email:""}
                                     disabled
                                 />
 
@@ -112,7 +114,7 @@ const Profile = () => {
                                     className='bg-transparent w-full outline-none '
                                     type='tel'
                                     placeholder='9775270246'
-                                    value={'9775270246'}
+                                    value={userData.phone?userData.phone:""}
                                     disabled
                                 />
                             </div>

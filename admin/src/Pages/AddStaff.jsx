@@ -1,6 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from "react-hook-form";
+import axios from "axios"
+import { useContext } from 'react';
+import { AdminContext } from '../context/AdminContext';
+import { toast } from 'react-toastify';
+
+
+
+
+
+
+
 const AddStaff = () => {
+
+  const {BACKEND_URI,adminToken,userData,setStaffdata,staffdata} = useContext(AdminContext)
+
   // react-hook-forms
   const { register, handleSubmit, formState: { errors, isValid, isSubmitting }, setValue } = useForm(
     {
@@ -13,8 +27,34 @@ const AddStaff = () => {
   const [disableSpecialization, setDisableSpecialization] = useState(false)
 
   // submit function
-  const submit = (e) => {
-    console.log(e)
+  const submit = async(e) => {
+    try {
+      const res = await axios.post(`${BACKEND_URI}staff/create-staff`,
+        {
+          name:e.name,
+          role:e.role,
+          phone:e.phone,
+          email:e.email,
+          specialization:e.specialization,
+          gender:e.gender
+        },{
+          headers:{
+            token:adminToken,
+            adminemail:userData.email,
+            adminid:userData._id
+          }
+        }
+      )
+      if(!res.data.success){
+        toast.error(res.data.message)
+      }
+      toast.success("Staff added")
+      console.log(res.data)
+      setStaffdata([...staffdata, res.data.savedStaff])
+    } catch (error) {
+      toast.error(error)
+      console.log(error.message)
+    }
 
   }
 
@@ -85,7 +125,7 @@ const AddStaff = () => {
               {...register("email", {
                 required: "Email is required",
                 minLength: {
-                  value: 15,
+                  value: 5,
                   message: "Email must be at least 15 characters",
                 },
                 maxLength: {
@@ -156,9 +196,10 @@ const AddStaff = () => {
             <select
               {...register("specialization")}
               className='bg-transparent outline-none px-7 w-full cursor-pointer disabled:cursor-not-allowed'
-              disabled={disableSpecialization}
-              defaultValue={"general physician"}
-            >
+              // disabled={disableSpecialization}
+              defaultValue={" "}
+            > 
+              <option value={" "} className='bg-zinc-900 border-zinc-800' >none</option>
               <option value="general physician" className='bg-zinc-900 border-zinc-800'>General Physician</option>
               <option value="cardiologist" className='bg-zinc-900 border-zinc-800'>Cardiologist</option>
               <option value="neurologist" className='bg-zinc-900 border-zinc-800'>Neurologist</option>

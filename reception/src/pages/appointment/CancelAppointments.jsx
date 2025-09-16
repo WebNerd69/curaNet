@@ -1,7 +1,10 @@
 import React from 'react'
-import { useForm } from 'react-hook-form';
-
-const CancelAppointments = () => {
+import { useContext } from 'react';
+import { useForm } from 'react-hook-form'
+import axios from "axios"
+import { toast } from 'react-toastify';
+import { ReceptionContext } from '../../context/ReceptionContext';
+const CancelAppointment = () => {
    // react-hook-forms
     const { register, handleSubmit, formState: { errors, isValid, isSubmitting }, setValue } = useForm(
       {
@@ -11,19 +14,33 @@ const CancelAppointments = () => {
     );
   
     // submit function
-    const submit = (e) => {
-      console.log(e)
-  
+    const {BACKEND_URI} = useContext(ReceptionContext)
+  // submit function
+  const submit = async(e) => {
+    try {
+      const res = await axios.put(`${BACKEND_URI}appointment/cancel/${e.apt_id}`,
+        {
+          newDateTime : e.date
+        }
+      )
+      if(!res.data.success){
+        toast.error("Oops! something went weong")
+      }
+      else{
+        toast.success("Appointment cancelled")
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error("OOPS! something went wrong")
     }
-  
-  
-  
-    const today = new Date().toISOString().split("T")[0];
+
+  }
+
     return (
-      <div className='w-full h-[100vh] relative flex items-center justify-center'>
+      <div className='w-full h-[100vh] relative flex items-center justify-center text-white'>
   
-        <div className='w-[35%] h-[40%] bg-zinc-900 rounded-3xl flex items-center gap-7 flex-col justify-center'>
-          <h1 className='text-3xl font-semibold text-white text-center mb-14 '>Cancel Appointment</h1>
+        <div className='md:w-[35%] w-[90%] h-[40%] bg-zinc-900 rounded-3xl flex items-center gap-7 flex-col justify-center'>
+          <h1 className='md:text-3xl text-xl font-semibold text-white text-center mb-14 '>Cancel Appointment</h1>
           <form onSubmit={handleSubmit(submit)} className='w-full flex-col flex gap-5 items-center'>
             {/* appointment id */}
             <div className='w-[80%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
@@ -39,18 +56,6 @@ const CancelAppointments = () => {
               />
             </div>
             {errors.apt_id ? <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.apt_id.message}</p> : <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>Appointment id</p>}
-                {/* <div className='w-[80%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
-                    <label htmlFor="date" className='absolute text-sm -top-3 opacity-[.56]'>Date *</label>
-                    <input
-                          {...register("date", {
-                             required: "Date is required"
-                          })}
-                          id='date'
-                          className='bg-transparent w-full outline-none text-white '
-                          type='date'
-                          min={today}/>
-                 </div>
-                 <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>Appointment date</p> */}
   
                  {/* submit button */}
                  <button
@@ -69,4 +74,4 @@ const CancelAppointments = () => {
     )
 }
 
-export default CancelAppointments
+export default CancelAppointment

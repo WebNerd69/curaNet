@@ -1,6 +1,9 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
-
+import axios from "axios"
+import { useContext } from 'react';
+import { AdminContext } from '../context/AdminContext';
+import { toast } from 'react-toastify';
 const FireStaff = () => {
   const { handleSubmit, register, formState: { errors, isSubmitting, isValid } } = useForm(
     {
@@ -9,10 +12,33 @@ const FireStaff = () => {
     }
   );
 
+  const {BACKEND_URI,adminToken,userData,setStaffdata,staffdata} = useContext(AdminContext)
 
   // functions
-  const submit = (data) => {
-    console.log(data)
+  const submit = async(data) => {
+    console.log(userData , adminToken)
+    try {
+      const res = await axios.delete(`${BACKEND_URI}staff/fire/${data.id}`,
+        {
+          data:{},
+          headers:{
+            token:adminToken,
+            adminemail:userData.email,
+            adminid:userData._id
+          }
+        }
+      )
+      if(!res.data.success){
+        toast.error(res.data.message)
+      }
+      toast.success("Staff fired successfully😤😤😤")
+      console.log(res.data)
+      setStaffdata(prevStaff =>
+    prevStaff.filter(staff => staff.email !== res.data.updatedStaff.email)
+  );
+    } catch (error) {
+      toast.error(error.message)
+    }
   }
 
 
@@ -60,7 +86,7 @@ const FireStaff = () => {
             : <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>This is the display name</p>
           }
 
-          {/* Email */}
+          {/* Email
           <div className='w-[80%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
             <label htmlFor="email" className='absolute text-sm -top-3 opacity-[.56]'>Email</label>
             <input
@@ -88,6 +114,23 @@ const FireStaff = () => {
           {errors.email
             ? <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.email.message}</p>
             : <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>Work email</p>
+          } */}
+          {/* id */}
+          <div className='w-[80%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
+            <label htmlFor="id" className='absolute text-sm -top-3 opacity-[.56]'>id</label>
+            <input
+              {...register("id", {
+                required: "id is required",
+              })}
+              id="id"
+              type="id"
+              className='bg-transparent w-full outline-none'
+              placeholder='d1s5d11sdad51d5'
+            />
+          </div>
+          {errors.id
+            ? <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.id.message}</p>
+            : <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>Staff id</p>
           }
 
           {/* Textarea */}
@@ -119,7 +162,7 @@ const FireStaff = () => {
             className='px-7 py-3 border border-zinc-800 rounded-xl font-semibold cursor-pointer disabled:opacity-[.56]'
             disabled={!isValid || isSubmitting}
           >
-            {isSubmitting ? "Adding Staff ..." : "Add Staff"}
+            {isSubmitting ? "Fireing Staff ..." : "Fire Staff"}
           </button>
         </form>
       </div>

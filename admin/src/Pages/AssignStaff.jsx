@@ -4,10 +4,11 @@ import { DayPicker, getDefaultClassNames } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import TableStaff from "../components/TableStaff";
 import { AdminContext } from "../context/AdminContext";
-
+import axios from "axios"
+import {toast} from "react-toastify"
 const AssignStaff = () => {
     // context
-    const { staffdata } = useContext(AdminContext)
+    const { staffdata,BACKEND_URI,selectedStaff,adminToken,userData } = useContext(AdminContext)
 
     const [selectedDate, setSelectedDate] = useState(null);
     const [time, setTime] = useState("12:00");
@@ -42,6 +43,29 @@ const AssignStaff = () => {
             setSelectedDate(updated);
         }
     };
+
+
+    const handleAssign = async()=>{
+        try {
+            const res =  await axios.post(`${BACKEND_URI}staff/assign`,
+                {
+                    staffIds:selectedStaff,
+                    shiftDateTime:selectedDate
+                },
+                {headers:{
+                    token:adminToken,
+                    adminemail:userData.email,
+                    adminid:userData._id
+                }}
+            )
+            if(!res.data.success){
+                console.log(res.data)
+            }
+            toast.success("Assigned staffs")
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
 
     const defaultClassNames = getDefaultClassNames();
     return (
@@ -88,6 +112,7 @@ const AssignStaff = () => {
                     type="submit"
                     className='px-7 py-3 border border-zinc-800 rounded-xl font-semibold cursor-pointer disabled:opacity-[.56] disabled:cursor-not-allowed text-zinc-200'
                     disabled={buttonDisable}
+                    onClick={handleAssign}
                 >
                     Assign staff
                 </button>

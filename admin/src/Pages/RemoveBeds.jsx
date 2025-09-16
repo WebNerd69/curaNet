@@ -1,6 +1,12 @@
 import React from 'react'
+import { useContext } from 'react';
 import { useForm } from "react-hook-form";
+import { AdminContext } from '../context/AdminContext';
+import axios from "axios"
+import {toast} from 'react-toastify'
 const RemoveBeds = () => {
+
+     const {BACKEND_URI , adminToken , userData} = useContext(AdminContext)
      const { register, handleSubmit, formState: { errors, isSubmitting, isValid } } = useForm(
           {
                mode: "onChange",   // validates while typing
@@ -8,8 +14,27 @@ const RemoveBeds = () => {
           }
      );
 
-     const submit = (data) => {
-          console.log(data);
+     const submit = async(data) => {
+          try {
+               const res = await axios.delete(`${BACKEND_URI}bed/remove`,{
+                    data:{ 
+                    },
+                    headers:{
+                         token:adminToken,
+                         adminid:userData._id,
+                         adminemail:userData.email,
+                         ward:data.ward,
+                         bednumber:data.n
+                    }
+               })
+               if(!res.data.success){
+                    toast.error(res.data.message)
+               }
+               toast.success("Bed removed successfully")
+          } catch (error) {
+               console.log(error)
+               toast.error(error)
+          }
      }
      const numPat = /^[0-9]*$/;
      return (
@@ -24,21 +49,16 @@ const RemoveBeds = () => {
                          <div className='w-[80%] flex items-center px-5 py-3  bg-zinc-900 border-2 border-zinc-800 rounded-xl cursor-pointer relative'>
                               <label htmlFor="w" className='absolute text-sm -top-3 opacity-[.56]'>Ward</label>
                               <select {...register("ward")} className='bg-transparent outline-none w-full cursor-pointer ' id='w'>
-                                   <option value="G-A" className='bg-zinc-900 border-zinc-800 '>General-A</option>
-                                   <option value="G-B" className='bg-zinc-900 border-zinc-800 '>General-B</option>
-                                   <option value="G-C" className='bg-zinc-900 border-zinc-800 '>General-C</option>
+                                   <option value="general" className='bg-zinc-900 border-zinc-800 '>General</option>
 
-                                   <option value="M-A" className='bg-zinc-900 border-zinc-800 '>Maternity-A</option>
-                                   <option value="M-B" className='bg-zinc-900 border-zinc-800 '>Maternity-B</option>
-                                   <option value="M-C" className='bg-zinc-900 border-zinc-800 '>Maternity-C</option>
+                                   <option value="maternity" className='bg-zinc-900 border-zinc-800 '>Maternity</option>
+                                   
 
-                                   <option value="I-A" className='bg-zinc-900 border-zinc-800 '>ICU-A</option>
-                                   <option value="I-B" className='bg-zinc-900 border-zinc-800 '>ICU-B</option>
-                                   <option value="I-C" className='bg-zinc-900 border-zinc-800 '>ICU-C</option>
+                                   <option value="icu" className='bg-zinc-900 border-zinc-800 '>ICU</option>
+                                   
 
-                                   <option value="E-A" className='bg-zinc-900 border-zinc-800 '>Emergency-A</option>
-                                   <option value="E-B" className='bg-zinc-900 border-zinc-800 '>Emergency-B</option>
-                                   <option value="E-C" className='bg-zinc-900 border-zinc-800 '>Emergency-C</option>
+                                   <option value="emergency" className='bg-zinc-900 border-zinc-800 '>Emergency</option>
+
                               </select>
                               
                          </div>

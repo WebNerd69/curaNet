@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useForm } from "react-hook-form";
-
+import axios from "axios"
+import { toast } from "react-toastify"
+import { ReceptionContext } from '../../context/ReceptionContext';
 const AddPatient = () => {
   // react-hook-forms
   const { register, handleSubmit, formState: { errors, isValid, isSubmitting }, setValue } = useForm(
@@ -9,10 +11,32 @@ const AddPatient = () => {
       reValidateMode: "onChange", // re-checks on every change
     }
   );
-
+  const { BACKEND_URI , patientData , setPatientData } = useContext(ReceptionContext)
   // submit function
-  const submit = (e) => {
-    console.log(e)
+  const submit = async(e) => {
+    try {
+      const res = await axios.post(`${BACKEND_URI}user/create`,
+        {
+          name:e.name,
+          phone:e.phone,
+          email:e.email,
+          gender:e.gender,
+          emergencyContact:e.emergencyPhone,
+          address:e.address,
+          age:e.age,
+          bloodGroup:e.bloodGroup
+        }
+      )
+      // if(!res.data.success){
+      //   toast.error(res.data.message)
+      // }
+      toast.success("Staff added")
+      console.log(res)
+      setPatientData([...patientData, res.data])
+    } catch (error) {
+      toast.error(error)
+      console.log(error.message)
+    }
 
   }
 

@@ -1,317 +1,10 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { createContext, useEffect, useState } from "react";
-
+import axios from "axios"
 
 
 export const AdminContext = createContext()
 
-
-// arrays
-const test_staffdata = [
-  {
-    id: "stf_a1b1c1",
-    name: "Rudra Pratap Roy",
-    role: "Admin",
-    status: "Active",
-    specialization: "null",
-    salary: 95000,
-  },
-  {
-    id: "stf_a1b2c3",
-    name: "John Doe",
-    role: "Nurse",
-    status: "Active",
-    specialization: "null",
-    salary: 55000,
-  },
-  {
-    id: "stf_d4e5f6",
-    name: "Dr Hogback",
-    role: "Doctor",
-    status: "Active",
-    specialization: "Cardiology",
-    salary: 180000,
-  },
-  {
-    id: "stf_g7h8i9",
-    name: "John Sarkar",
-    role: "Nurse",
-    status: "Inactive",
-    specialization: "null",
-    salary: 48000,
-  },
-  {
-    id: "stf_j1k2l3",
-    name: "Pradeep Seith",
-    role: "Janitor",
-    status: "Active",
-    specialization: "null",
-    salary: 22000,
-  },
-  {
-    id: "stf_m4n5o6",
-    name: "Sakshi Gupta",
-    role: "Receptionist",
-    status: "Active",
-    specialization: "null",
-    salary: 33000,
-  },
-  {
-    id: "stf_p7q8r9",
-    name: "Dr. Aditi Sharma",
-    role: "Doctor",
-    status: "Active",
-    specialization: "Neurology",
-    salary: 200000,
-  },
-  {
-    id: "stf_s1t2u3",
-    name: "Ramesh Iyer",
-    role: "Janitor",
-    status: "Inactive",
-    specialization: "null",
-    salary: 19000,
-  },
-  {
-    id: "stf_v4w5x6",
-    name: "Rajesh Kumar",
-    role: "Pharmacist",
-    status: "Active",
-    specialization: "null",
-    salary: 60000,
-  },
-  {
-    id: "stf_y7z8a9",
-    name: "Dr. Michael Brown",
-    role: "Doctor",
-    status: "Active",
-    specialization: "Orthopedics",
-    salary: 210000,
-  },
-  {
-    id: "stf_b1c2d3",
-    name: "Aman Singh",
-    role: "Technician",
-    status: "Inactive",
-    specialization: "null",
-    salary: 45000,
-  },
-  {
-    id: "stf_e4f5g6",
-    name: "Sneha Patel",
-    role: "Nurse",
-    status: "Active",
-    specialization: "null",
-    salary: 50000,
-  },
-  {
-    id: "stf_h7i8j9",
-    name: "Dr. Arjun Mehta",
-    role: "Doctor",
-    status: "Active",
-    specialization: "Pediatrics",
-    salary: 175000,
-  },
-  {
-    id: "stf_k1l2m3",
-    name: "Meera Kapoor",
-    role: "Receptionist",
-    status: "Inactive",
-    specialization: "null",
-    salary: 28000,
-  },
-  {
-    id: "stf_n4o5p6",
-    name: "Karan Singh",
-    role: "Technician",
-    status: "Active",
-    specialization: "null",
-    salary: 50000,
-  },
-  {
-    id: "stf_q7r8s9",
-    name: "Priya Sharma",
-    role: "Nurse",
-    status: "Active",
-    specialization: "null",
-    salary: 57000,
-  },
-  {
-    id: "stf_t1u2v3",
-    name: "Dr. Kavita Joshi",
-    role: "Doctor",
-    status: "Inactive",
-    specialization: "Dermatology",
-    salary: 160000,
-  },
-  {
-    id: "stf_w4x5y6",
-    name: "Anil Verma",
-    role: "Janitor",
-    status: "Active",
-    specialization: "null",
-    salary: 21000,
-  },
-  {
-    id: "stf_z7a8b9",
-    name: "Deepak Malhotra",
-    role: "Pharmacist",
-    status: "Inactive",
-    specialization: "null",
-    salary: 48000,
-  },
-  {
-    id: "stf_c1d2e3",
-    name: "Dr. Neha Reddy",
-    role: "Doctor",
-    status: "Active",
-    specialization: "Gynecology",
-    salary: 190000,
-  },
-  {
-    id: "stf_f4g5h6",
-    name: "Ritu Sharma",
-    role: "Receptionist",
-    status: "Active",
-    specialization: "null",
-    salary: 35000,
-  },
-  {
-    id: "stf_i7j8k9",
-    name: "Suresh Nair",
-    role: "Technician",
-    status: "Inactive",
-    specialization: "null",
-    salary: 40000,
-  },
-  {
-    id: "stf_l1m2n3",
-    name: "Ananya Gupta",
-    role: "Nurse",
-    status: "Active",
-    specialization: "null",
-    salary: 53000,
-  },
-  {
-    id: "stf_o4p5q6",
-    name: "Dr. Rohan Khanna",
-    role: "Doctor",
-    status: "Active",
-    specialization: "Oncology",
-    salary: 220000,
-  },
-  {
-    id: "stf_r7s8t9",
-    name: "Asha Bhat",
-    role: "Janitor",
-    status: "Active",
-    specialization: "null",
-    salary: 20000,
-  },
-  {
-    id: "stf_u1v2w3",
-    name: "Vinay Kumar",
-    role: "Pharmacist",
-    status: "Active",
-    specialization: "null",
-    salary: 65000,
-  },
-  {
-    id: "stf_x4y5z6",
-    name: "Dr. Mehul Shah",
-    role: "Doctor",
-    status: "Inactive",
-    specialization: "Radiology",
-    salary: 170000,
-  },
-  {
-    id: "stf_a7b8c9",
-    name: "Simran Kaur",
-    role: "Receptionist",
-    status: "Active",
-    specialization: "null",
-    salary: 30000,
-  },
-  {
-    id: "stf_d1e2f3",
-    name: "Rahul Desai",
-    role: "Technician",
-    status: "Active",
-    specialization: "null",
-    salary: 52000,
-  },
-  {
-    id: "stf_g4h5i6",
-    name: "Pooja Nair",
-    role: "Nurse",
-    status: "Inactive",
-    specialization: "null",
-    salary: 42000,
-  },
-  {
-    id: "stf_j7k8l9",
-    name: "Dr. Sanjay Patel",
-    role: "Doctor",
-    status: "Active",
-    specialization: "Cardiology",
-    salary: 230000,
-  },
-  {
-    id: "stf_m1n2o3",
-    name: "Amit Yadav",
-    role: "Janitor",
-    status: "Inactive",
-    specialization: "null",
-    salary: 18000,
-  },
-  {
-    id: "stf_p4q5r6",
-    name: "Nisha Verma",
-    role: "Pharmacist",
-    status: "Active",
-    specialization: "null",
-    salary: 55000,
-  },
-  {
-    id: "stf_s7t8u9",
-    name: "Dr. Shalini Menon",
-    role: "Doctor",
-    status: "Active",
-    specialization: "Psychiatry",
-    salary: 195000,
-  },
-  {
-    id: "stf_v1w2x3",
-    name: "Kavya Iyer",
-    role: "Receptionist",
-    status: "Active",
-    specialization: "null",
-    salary: 37000,
-  },
-  {
-    id: "stf_y4z5a6",
-    name: "Manoj Gupta",
-    role: "Technician",
-    status: "Active",
-    specialization: "null",
-    salary: 47000,
-  },
-  {
-    id: "stf_b7c8d9",
-    name: "Rashmi Rathi",
-    role: "Nurse",
-    status: "Active",
-    specialization: "null",
-    salary: 60000,
-  },
-  {
-    id: "stf_e1f2g3",
-    name: "Dr. Vivek Agarwal",
-    role: "Doctor",
-    status: "Inactive",
-    specialization: "ENT",
-    salary: 150000,
-  },
-];
 
 const genderData_test =[
   { date: "2025-06-01", Males: 2581, Females: 3602 },
@@ -402,26 +95,52 @@ const genderData_test =[
   { date: "2025-08-25", Males: 3351, Females: 3100 }
 ];
 
+const BACKEND_URI = "http://localhost:6900/api/"
+
 
 const AdminContextProvider = (props) => {
   // state variables
-  const [staffdata, setStaffdata] = useState(test_staffdata)
+  const [staffdata, setStaffdata] = useState()
   const [genderData, setgenderData] = useState(genderData_test)
   const [selectedStaff, setSelectedStaff] = useState([])
-
-
+  const [userData,setUserData] = useState({})
+  const [adminToken,setAdminToken] = useState()
+  
   useEffect(()=>{
     console.log(selectedStaff)
   },[selectedStaff])
-
+  
+  
+  
+  const fetchAllStaff = async ()=>{
+    try {
+      const res = await axios.get(`${BACKEND_URI}staff/`)
+      setStaffdata(res.data)
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  useEffect(()=>{
+    fetchAllStaff()
+  },[userData])
 
   const value = {
     // getter variables
     staffdata,
     selectedStaff,
     genderData,
+    userData,
+    adminToken,
+    setStaffdata,
+
     // setter variables
-    setSelectedStaff
+    setSelectedStaff,
+    setUserData,
+    setAdminToken,
+
+    // variables
+    BACKEND_URI
   }
 
   return (

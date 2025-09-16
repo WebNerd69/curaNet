@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { AlignJustify, ChevronsUpDown, LogOut, KeyRound, Settings, ChartArea, UsersRound, UserRoundPlus, UserRoundMinus, ContactRound, IndianRupee, BedSingle } from 'lucide-react';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { ReceptionContext } from '../context/ReceptionContext';
+
+import {useAuth0} from "@auth0/auth0-react"
 const Sidebar = () => {
+
+     const {userData} = useContext(ReceptionContext)
+     const {logout} = useAuth0()
      // state variables
      const [isOpen, setIsOpen] = useState(false);
      const [isLogoutClicked, setIsLogoutClicked]= useState(false)
@@ -17,18 +23,12 @@ const Sidebar = () => {
                <div className='bg-zinc-900 h-screen text-zinc-200 w-[20vw] flex flex-col gap-5 fixed top-0 left-0 z-10'>
                <header className='flex items-center justify-center p-2 w-full h-20 group relative cursor-pointer mt-3' >
                     <div className='flex items-center gap-3 group-hover:bg-zinc-800 rounded-xl p-2 w-full'>
-                         <div className={`absolute w-60 h-48 rounded-xl bg-zinc-800 border-1 border-zinc-700 top-3 left-[18vw] flex flex-col justify-center items-center p-2 gap-1  ${isOpen ? "opacity-100 z-10 block" : "opacity-0 z-0 hidden"} transition-opacity duration-150 shadow-xl`}>
+                         <div className={`absolute w-60 h-34 rounded-xl bg-zinc-800 border-1 border-zinc-700 top-3 left-[18vw] flex flex-col justify-center items-center p-2 gap-1  ${isOpen ? "opacity-100 z-10 block" : "opacity-0 z-0 hidden"} transition-opacity duration-150 shadow-xl`}>
                               <div className='w-full px-2'>
 
                                    <p className='text-sm font-medium text-zinc-500'>profile settings</p>
                               </div>
-                              <NavLink to={'/profile/change-password'} className='px-2 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 w-full flex gap-3 items-center'>
-                                   <div className='w-8 h-8 p-1 rounded-md border-[1px] border-zinc-600 flex justify-center items-center'>
-                                        <KeyRound className='w-4 h-4 opacity-70' />
-                                   </div>
-                                   <span className='font-medium'>Change Password</span>
-                              </NavLink>
-                              <NavLink to={'/profile/settings'} className='px-2 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 w-full flex gap-3 items-center'>
+                              <NavLink to={'/profile'} className='px-2 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 w-full flex gap-3 items-center'>
                                    <div className='w-8 h-8 p-1 rounded-md border-[1px] border-zinc-600 flex justify-center items-center'>
                                         <Settings className='w-4 h-4 opacity-70' />
                                    </div>
@@ -45,7 +45,9 @@ const Sidebar = () => {
                          <div className={`absolute w-60 h-32 rounded-xl bg-zinc-800 border-1 border-zinc-700 top-[16vh] left-[25vw] flex flex-col justify-center items-center p-4 gap-3  ${isLogoutClicked ? "opacity-100 z-10 block" : "opacity-0 z-0 hidden"} transition-opacity duration-150 shadow-xl`}>
                               <p className='text-sm text-zinc-400 font-medium'>Are you sure you want to logout?</p>
                               <div className='flex gap-2 w-full justify-between items-center'>
-                                   <button className='px-8 py-2 bg-zinc-800 border-2 rounded-xl border-zinc-700 '>Yes</button>
+                                   <button className='px-8 py-2 bg-zinc-800 border-2 rounded-xl border-zinc-700 '
+                                   onClick={logout}
+                                   >Yes</button>
                                    <button className='px-8 py-2 bg-[#49197D] rounded-xl border-2 border-[#49197D]' onClick={()=>setIsLogoutClicked(false)}>No</button>
                               </div>
                          </div>
@@ -55,8 +57,8 @@ const Sidebar = () => {
                          <div className='flex justify-between items-center w-[80%]' onClick={popUpHandler}>
                               <div className='flex flex-col px-3'>
 
-                                   <p className=' text-[16px] font-medium'>Receptionist Panel</p>
-                                   <p className='text-[14px] opacity-[.56]'>receptionist123@gmail.com</p>
+                                   <p className=' text-[16px] font-medium'>{userData.name?userData.name:"Receptionist Panel"}</p>
+                                   <p className='text-[14px] opacity-[.56]'>{userData.email?userData.email:"receptionist123@gmail.com"}</p>
                               </div>
                               <ChevronsUpDown className='w-6 h-6 text-[#BC37F5]' />
 
@@ -90,10 +92,10 @@ const Sidebar = () => {
                          <span className='font-medium'>Add Patient</span>
                     </NavLink>
 
-                    <NavLink to={'/patients/generate-pay-slip'} className={({isActive})=> isActive? 'w-full flex items-center gap-3 rounded-xl px-2 py-3 hover:bg-zinc-800 cursor-pointer text-[#BC37F5]' :'w-full flex items-center gap-3 rounded-xl px-2 py-3 hover:bg-zinc-800 cursor-pointer text-zinc-200'}>
+                    {/* <NavLink to={'/patients/generate-pay-slip'} className={({isActive})=> isActive? 'w-full flex items-center gap-3 rounded-xl px-2 py-3 hover:bg-zinc-800 cursor-pointer text-[#BC37F5]' :'w-full flex items-center gap-3 rounded-xl px-2 py-3 hover:bg-zinc-800 cursor-pointer text-zinc-200'}>
                          <IndianRupee className='w-6 h-6' />
                          <span className='font-medium'>Generate pay slip</span>
-                    </NavLink>
+                    </NavLink> */}
 
                </section>
 

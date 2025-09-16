@@ -76,24 +76,24 @@ const TableStaff = ({ staffdata }) => {
 
                </div>
                {/* header */}
-               <div className={`grid w-full grid-cols-[1fr_3fr_.5fr_2fr_1fr] gap-1 text-zinc-400 h-10 items-center`}>
-                    <p className='px-3 opacity-[.56] text-sm font-medium'>ID</p>
-                    <p className='px-3 opacity-[.56] text-sm font-medium'>NAME</p>
-                    <p className='px-3 opacity-[.56] text-sm font-medium'>STATUS</p>
-                    <p className='px-3 opacity-[.56] text-sm font-medium'>SPECIALIZATION</p>
-                    <p className='px-3 opacity-[.56] text-sm font-medium'>APPOINTMENTS</p>
+               <div className={`grid w-full grid-cols-[2fr_3fr_1fr_2fr_1fr] gap-1 text-zinc-400 h-10 items-center`}>
+                    <p className='opacity-[.56] text-sm font-medium'>ID</p>
+                    <p className='opacity-[.56] text-sm font-medium'>NAME</p>
+                    <p className='opacity-[.56] text-sm font-medium'>STATUS</p>
+                    <p className='opacity-[.56] text-sm font-medium'>SPECIALIZATION</p>
+                    <p className='opacity-[.56] text-sm font-medium'>APPOINTMENTS</p>
                </div>
                {/* body */}
                <div className='w-full h-full relative overflow-y-scroll flex flex-col gap-y-7 text-zinc-300 py-5 '>
                     {filteredData.map((staff) => (
-                         <div key={staff.id} className={`grid w-full grid-cols-[1fr_3fr_.5fr_2fr_1fr] gap-1 items-center h-10`}>
-                              <p className='px-3 text-zinc-400'>{staff.id}</p>
-                              <p className='px-4'>{staff.name}</p>
-                              <div className="w-full justify-center flex relative">
+                         <div key={staff.id} className={`grid w-full grid-cols-[2fr_3fr_1fr_2fr_1fr] gap-1 items-center h-10`}>
+                              <p className=' text-zinc-400'>{staff._id}</p>
+                              <p className=''>{staff.name}</p>
+                              <div className="w-full justify-center flex relative items-center">
                                    <span className={`rounded-full w-3 h-3 ${staff.status.toLowerCase() === "active" ? 'bg-[#BC37F5]' : 'bg-zinc-600'}`}></span>
                               </div>
-                              <p className='px-7 text-zinc-400'>{staff.specialization}</p>
-                              <p className='px-7 text-zinc-400'>{staff.appointments.length}</p>
+                              <p className=' text-zinc-400'>{staff.specialization}</p>
+                              <p className=' text-zinc-400'>{staff.appointments.length}</p>
                          </div>
                     ))}
 

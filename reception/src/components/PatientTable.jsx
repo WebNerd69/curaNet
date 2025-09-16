@@ -57,15 +57,15 @@ const PatientTable = ({ patientData }) => {
 
                </div>
                {/* header */}
-               <div className={`grid w-full grid-cols-[1fr_1.5fr_.5fr_.7fr_1fr_1.3fr_1fr_1fr] gap-1 text-zinc-400 h-10 items-center z-0`}>
-                    <p className='px-3 opacity-[.56] text-sm font-medium'>ID</p>
-                    <p className='px-3 opacity-[.56] text-sm font-medium'>NAME</p>
-                    <p className='px-3 opacity-[.56] text-sm font-medium'>AGE</p>
-                    <p className='px-3 opacity-[.56] text-sm font-medium'>GENDER</p>
-                    <p className='px-3 opacity-[.56] text-sm font-medium'>BLOOD GROUP</p>
-                    <p className='px-3 opacity-[.56] text-sm font-medium'>EMAIL</p>
-                    <p className='px-3 opacity-[.56] text-sm font-medium'>PHONE</p>
-                    <p className='px-3 opacity-[.56] text-sm font-medium'>EMERGENCY CON.</p>
+               <div className={`grid w-full grid-cols-[2fr_2fr_.5fr_.7fr_1fr_2fr_1fr_1fr] gap-1 text-zinc-400 h-10 items-center z-0`}>
+                    <p className=' opacity-[.56] text-sm font-medium'>ID</p>
+                    <p className=' opacity-[.56] text-sm font-medium'>NAME</p>
+                    <p className=' opacity-[.56] text-sm font-medium'>AGE</p>
+                    <p className=' opacity-[.56] text-sm font-medium'>GENDER</p>
+                    <p className=' opacity-[.56] text-sm font-medium'>BLOOD GROUP</p>
+                    <p className=' opacity-[.56] text-sm font-medium'>EMAIL</p>
+                    <p className=' opacity-[.56] text-sm font-medium'>PHONE</p>
+                    <p className=' opacity-[.56] text-sm font-medium'>EMERGENCY CON.</p>
 
                </div>
                {/* body */}
@@ -73,16 +73,16 @@ const PatientTable = ({ patientData }) => {
                     {filteredData.map((patient) => (
                          <div
                               key={patient.id}
-                              className="grid w-full grid-cols-[1fr_1.5fr_.5fr_.7fr_1fr_1.3fr_1fr_1fr] gap-1 h-10 items-center hover:bg-zinc-800 transition-all duration-150 cursor-default relative group "
+                              className="grid w-full grid-cols-[2fr_2fr_.5fr_.7fr_1fr_2fr_1fr_1fr] gap-1 h-10 items-center hover:bg-zinc-800 transition-all duration-150 cursor-default relative group "
                          >
-                              <p className="px-3 text-zinc-400 ">{patient._id}</p>
-                              <p className="px-4 ">{patient.name}</p>
-                              <p className="px-4 text-zinc-400 ">{patient.age}</p>
-                              <p className="px-4 text-zinc-400 ">{patient.gender}</p>
-                              <p className="px-4 text-zinc-400 ">{patient.bloodGroup}</p>
-                              <p className={`px-4 ${patient.email? "text-zinc-300":"text-zinc-400"}`}>{patient.email ? patient.email :"Not Given"}</p>
-                              <p className="px-4 ">{patient.phone}</p>
-                              <p className="px-4 text-zinc-400 ">{patient.emergencyContact}</p>
+                              <p className=" text-zinc-400 ">{patient._id}</p>
+                              <p className=" ">{patient.name}</p>
+                              <p className=" text-zinc-400 ">{patient.age}</p>
+                              <p className=" text-zinc-400 ">{patient.gender}</p>
+                              <p className=" text-zinc-400 ">{patient.bloodGroup}</p>
+                              <p className={`${patient.email? "text-zinc-300":"text-zinc-400"}`}>{patient.email ? patient.email :"Not Given"}</p>
+                              <p className="">{patient.phone}</p>
+                              <p className=" text-zinc-400 ">{patient.emergencyContact}</p>
 
                               {/* hover details */}
                               <div className='w-[20vw] h-[7vh] bg-[#9e9e9e3b] rounded-3xl group-hover:flex hidden z-10 absolute backdrop-blur-md right-0 top-12 px-5 py-3 items-center justify-center'>

@@ -6,7 +6,7 @@ import adminVarifier from "../middleware/adminVarifier.js"
 const staffRouter = express.Router()
 
 staffRouter.get("/", getAllStaff)
-staffRouter.get("/get-staff-by-email",getStaffByEmail)
+staffRouter.post("/get-staff-by-email",getStaffByEmail)
 
 staffRouter.put("/update-profile/:staffId", updateProfile)
 

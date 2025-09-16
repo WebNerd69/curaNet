@@ -116,3 +116,15 @@ export const checkOrCreateUser = async (req, res) => {
     res.status(500).json({success:false, message: err.message });
   }
 };
+
+export const getAllUsers = async(req,res)=>{
+     try {
+          let users = await userModel.find({})
+          if(!users){
+               res.status(404).json({message:"users not found" , success:false})
+          }
+          res.status(200).json({success:true,users})
+     } catch (error) {
+          res.status(500).json({success:false , message:error.message})
+     }
+}

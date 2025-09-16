@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useForm } from 'react-hook-form';
-
+import { ReceptionContext } from '../../context/ReceptionContext';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 const BookAppointment = () => {
    // react-hook-forms
    const { register, handleSubmit, formState: { errors, isValid, isSubmitting }, setValue } = useForm(
@@ -10,9 +12,31 @@ const BookAppointment = () => {
       }
    );
 
+   const {BACKEND_URI} = useContext(ReceptionContext)
+
    // submit function
-   const submit = (e) => {
-      console.log(e)
+   const submit = async(e) => {
+      try {
+         const res = await axios.post(`${BACKEND_URI}appointment/create`,{
+            userId:e.id,
+            userName:e.name,
+            doctorName: e.doctor_name,
+            doctorId: e.did,
+            dateTime : e.date,
+            gender: e.gender,
+            phone : e.phone,
+            age : e.age,
+            case:e.case
+         })
+
+         console.log(res)
+         if(!res.data.success){
+            toast.error("Something went wrong")
+         }
+         toast.success("Appointment booked")
+      } catch (error) {
+         toast.error(error.message)
+      }
 
    }
 
@@ -26,7 +50,7 @@ const BookAppointment = () => {
    return (
       <div className='w-full h-[100vh] relative flex items-center justify-center'>
 
-         <div className='w-[35%] h-[75%] bg-zinc-900 rounded-3xl flex items-center gap-7 flex-col justify-center'>
+         <div className='w-[35%] h-[85%] bg-zinc-900 rounded-3xl flex items-center gap-7 flex-col justify-center'>
             <h1 className='text-3xl font-semibold text-white text-center my-5'>Book Appointment</h1>
             <form onSubmit={handleSubmit(submit)} className='w-full flex-col flex gap-5 items-center'>
                {/* name of the Patient */}
@@ -66,10 +90,25 @@ const BookAppointment = () => {
                      id="id"
                      type="text"
                      className="bg-transparent w-full outline-none"
-                     placeholder="pat_a1b1c1"
+                     placeholder="d46a4d5a4fa4a4w6"
                   />
                </div>
                {errors.id ? <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.id.message}</p> : <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>patient ID</p>}
+
+               {/* patient id */}
+               <div className='w-[80%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
+                  <label htmlFor="did" className='absolute text-sm -top-3 opacity-[.56]'>Doctor ID *</label>
+                  <input
+                     {...register("did", {
+                        required: "Doctor id is required"
+                     })}
+                     id="did"
+                     type="text"
+                     className="bg-transparent w-full outline-none"
+                     placeholder="dasda6d56ad6da48"
+                  />
+               </div>
+               {errors.did ? <p className='text-sm text-red-500 -mt-3 w-[80%]'>{errors.did.message}</p> : <p className='text-sm opacity-[.56] -mt-3 w-[80%]'>doctor ID</p>}
 
                {/* name of the Patient */}
                <div className='w-[80%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
@@ -127,7 +166,7 @@ const BookAppointment = () => {
 
                <div className='w-[80%] flex gap-4 justify-between'>
                   {/* patient gender */}
-                  <div className='w-[50%] flex justify-center px-5 py-3  bg-zinc-900 border-2 border-zinc-800 rounded-xl cursor-pointer relative'>
+                  <div className='w-[33%] flex justify-center px-5 py-3  bg-zinc-900 border-2 border-zinc-800 rounded-xl cursor-pointer relative'>
                      <label htmlFor="gender" className='absolute text-sm -top-3 opacity-[.56] left-5'>Gender *</label>
                      <select {...register("gender")} className='bg-transparent outline-none px-5 cursor-pointer '>
                         <option value="male" className='bg-zinc-900 border-zinc-800 '>male</option>
@@ -136,8 +175,17 @@ const BookAppointment = () => {
                      </select>
                   </div>
 
+                  <div className='w-[33%] flex justify-center px-5 py-3  bg-zinc-900 border-2 border-zinc-800 rounded-xl cursor-pointer relative'>
+                     <label htmlFor="case" className='absolute text-sm -top-3 opacity-[.56] left-5'>case *</label>
+                     <select {...register("case")} className='bg-transparent outline-none px-5 cursor-pointer '>
+                        <option value="general" className='bg-zinc-900 border-zinc-800 '>general</option>
+                        <option value="maternity" className='bg-zinc-900 border-zinc-800 '>maternity</option>
+                        <option value="emergency" className='bg-zinc-900 border-zinc-800 '>emergency</option>
+                     </select>
+                  </div>
+
                   {/* patient age */}
-                  <div className='w-[50%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
+                  <div className='w-[33%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
                      <label htmlFor="age" className='absolute text-sm -top-3 opacity-[.56]'>Age *</label>
                      <input
                         {...register("age", {

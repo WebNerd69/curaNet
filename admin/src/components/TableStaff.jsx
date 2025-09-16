@@ -81,7 +81,7 @@ const TableStaff = ({ staffdata , selectEmployees }) => {
 
                </div>
                {/* header */}
-               <div className={`grid w-full ${selectEmployees=== true ?'grid-cols-[.5fr_1fr_3fr_2fr_.5fr_1.5fr_1.5fr]':'grid-cols-[1fr_3fr_2fr_.5fr_1.5fr_1.5fr]'} gap-1 text-zinc-400 h-10 items-center`}>
+               <div className={`grid w-full ${selectEmployees=== true ?'grid-cols-[.5fr_2fr_3fr_2fr_.5fr_1.5fr_1.5fr]':'grid-cols-[2fr_3fr_2fr_.5fr_1.5fr_1.5fr]'} gap-1 text-zinc-400 h-10 items-center`}>
                     {selectEmployees === true &&<p className="px-3 opacity-[.56] text-sm font-medium">✔</p>}
                     <p className='px-3 opacity-[.56] text-sm font-medium'>ID</p>
                     <p className='px-3 opacity-[.56] text-sm font-medium'>NAME</p>
@@ -93,14 +93,15 @@ const TableStaff = ({ staffdata , selectEmployees }) => {
                {/* body */}
                <div className='w-full h-full relative overflow-y-scroll flex flex-col gap-y-7 text-zinc-300 py-5 '>
                     {filteredData.map((staff) => (
-                         <div key={staff.id} className={`grid w-full ${selectEmployees=== true ?'grid-cols-[.5fr_1fr_3fr_2fr_.5fr_1.5fr_1.5fr]':'grid-cols-[1fr_3fr_2fr_.5fr_1.5fr_1.5fr]'} gap-1 items-center h-10`}>
+                         
+                         <div key={staff._id} className={`grid w-full ${selectEmployees=== true ?'grid-cols-[.5fr_2fr_3fr_2fr_.5fr_1.5fr_1.5fr]':'grid-cols-[2fr_3fr_2fr_.5fr_1.5fr_1.5fr]'} gap-1 items-center h-10`}>
                               {selectEmployees === true&&<input
                                    type="checkbox"
-                                   checked={selectedStaff.includes(staff.id)}
-                                   onChange={() => handleCheckboxChange(staff.id)}
+                                   checked={selectedStaff.includes(staff._id)}
+                                   onChange={() => handleCheckboxChange(staff._id)}
                                    className="cursor-pointer accent-[#BC37F5] rounded"
                               />}
-                              <p className='px-3 text-zinc-400'>{staff.id}</p>
+                              <p className='px-3 text-zinc-400'>{staff._id}</p>
                               <p className='px-3'>{staff.name}</p>
                               <p className='px-4 text-zinc-400'>{staff.role}</p>
                               <div className="w-full justify-center flex relative">

@@ -1,6 +1,9 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
-
+import axios from "axios"
+import { useContext } from 'react';
+import { toast } from 'react-toastify';
+import { ReceptionContext } from '../../context/ReceptionContext';
 const RescheduleAppointment = () => {
   // react-hook-forms
   const { register, handleSubmit, formState: { errors, isValid, isSubmitting }, setValue } = useForm(
@@ -9,10 +12,25 @@ const RescheduleAppointment = () => {
       reValidateMode: "onChange", // re-checks on every change
     }
   );
-
+  const {BACKEND_URI} = useContext(ReceptionContext)
   // submit function
-  const submit = (e) => {
-    console.log(e)
+  const submit = async(e) => {
+    try {
+      const res = await axios.put(`${BACKEND_URI}appointment/reschedule/${e.apt_id}`,
+        {
+          newDateTime : e.date
+        }
+      )
+      if(!res.data.success){
+        toast.error("Oops! something went weong")
+      }
+      else{
+        toast.success("Appointment rescheduled")
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error("OOPS! something went wrong")
+    }
 
   }
 
@@ -20,10 +38,10 @@ const RescheduleAppointment = () => {
 
   const today = new Date().toISOString().split("T")[0];
   return (
-    <div className='w-full h-[100vh] relative flex items-center justify-center'>
+    <div className='w-full h-[100vh] relative flex items-center justify-center text-white'>
 
-      <div className='w-[35%] h-[40%] bg-zinc-900 rounded-3xl flex items-center gap-7 flex-col justify-center'>
-        <h1 className='text-3xl font-semibold text-white text-center my-5'>Reschedule Appointment</h1>
+      <div className='md:w-[35%] md:h-[40%] h-[50%] w-[90%] bg-zinc-900 rounded-3xl flex items-center gap-7 flex-col justify-center'>
+        <h1 className='md:text-3xl text-xl font-semibold text-white text-center my-5'>Reschedule Appointment</h1>
         <form onSubmit={handleSubmit(submit)} className='w-full flex-col flex gap-5 items-center'>
           {/* appointment id */}
           <div className='w-[80%] px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>

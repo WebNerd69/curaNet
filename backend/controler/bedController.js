@@ -10,9 +10,10 @@ export async function addBed(req, res) {
                ward
           });
           const savedBed = await newBed.save();
-          res.status(201).json({savedBed , message:"Bed added successfully"});
+          res.status(200).json({savedBed , message:"Bed added successfully" , success:true
+          });
      } catch (error) {
-          res.status(500).json({ message: error.message });
+          res.status(500).json({ message: error.message , success:false });
      }
 }
 
@@ -24,9 +25,9 @@ export async function removeBed(req, res) {
           if (!deletedBed) {
                return res.status(404).json({ message: 'Bed not found' });
           }
-          res.status(200).json({ message: 'Bed removed successfully' });
+          res.status(200).json({ message: 'Bed removed successfully' , success:true});
      } catch (error) {
-          res.status(500).json({ message: error.message });
+          res.status(500).json({ message: error.message , success:false});
      }
 }
 
@@ -37,16 +38,16 @@ export async function assignPatient(req, res) {
 
           const bed = await bedModel.findOne({bedNumber , ward});
           if (!bed) {
-               return res.status(404).json({ message: 'Bed not found' });
+               return res.status(404).json({ message: 'Bed not found' ,success:false});
           }
 
           if (bed.isOccupied) {
-               return res.status(400).json({ message: 'Bed is not available' });
+               return res.status(400).json({ message: 'Bed is not available' ,success:false});
           }
 
           const user = await userModel.findById(patientID);
           if (!user) {
-               return res.status(404).json({ message: 'User not found' });
+               return res.status(404).json({ message: 'User not found' ,success:false});
           }
           user.bedNumber = bed.ward + "-" + bed.bedNumber;
           await user.save();
@@ -56,9 +57,9 @@ export async function assignPatient(req, res) {
           bed.gender = user.gender;
           await bed.save();
 
-          res.status(200).json({ message: 'Patient assigned to bed successfully', bed });
+          res.status(200).json({ message: 'Patient assigned to bed successfully', bed ,success:true});
      } catch (error) {
-          res.status(500).json({ message: error.message });
+          res.status(500).json({ message: error.message ,success:false});
      }
 }
 

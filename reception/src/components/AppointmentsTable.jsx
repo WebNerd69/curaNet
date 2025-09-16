@@ -8,7 +8,7 @@ const AppointmentsTable = ({ patientData }) => {
      const [filteredData, setFilteredData] = useState(patientData);
 
      const nameFilter = watch("name", "");
-     const statusFilter = watch("status", "");
+     const caseFilter = watch("case", "");
 
      // toggle checkbox
 
@@ -16,11 +16,11 @@ const AppointmentsTable = ({ patientData }) => {
      const filterData = () => {
           return patientData.filter((patient) => {
                const matchName = nameFilter
-                    ? patient.name.toLowerCase().includes(nameFilter.toLowerCase())
+                    ? patient.userName.toLowerCase().includes(nameFilter.toLowerCase())
                     : true;
 
-               const matchStatus = statusFilter
-                    ? patient.status.toLowerCase() === statusFilter.toLowerCase()
+               const matchStatus = caseFilter
+                    ? patient.case.toLowerCase() === caseFilter.toLowerCase()
                     : true;
 
                return matchName && matchStatus;
@@ -31,7 +31,7 @@ const AppointmentsTable = ({ patientData }) => {
      useEffect(() => {
           setFilteredData(filterData());
           // console.log(filterData())
-     }, [nameFilter, statusFilter]);
+     }, [nameFilter, caseFilter , patientData]);
 
 
      const handleFilterToggle = () => {
@@ -48,11 +48,11 @@ const AppointmentsTable = ({ patientData }) => {
                     </button>
                     <div className={`flex w-[50%] justify-between items-center ${filterOpen ? "block" : "hidden"} `}>
                          <div className='w-[30%] flex justify-center items-center px-5 py-1  bg-zinc-900 border-2 border-zinc-800 rounded-xl cursor-pointer text-zinc-300 '>
-                              <select {...register("status")} className='bg-transparent outline-none px-3 cursor-pointer' defaultValue={""}>
+                              <select {...register("case")} className='bg-transparent outline-none px-3 cursor-pointer' defaultValue={""}>
                                    <option value="" className='bg-zinc-900 border-zinc-800 '>All</option>
-                                   <option value="pending" className='bg-zinc-900 border-zinc-800 '>pending</option>
-                                   <option value="on-going" className='bg-zinc-900 border-zinc-800 '>on-going</option>
-                                   <option value="completed" className='bg-zinc-900 border-zinc-800 '>completed</option>
+                                   <option value="general" className='bg-zinc-900 border-zinc-800 '>general</option>
+                                   <option value="maternity" className='bg-zinc-900 border-zinc-800 '>maternity</option>
+                                   <option value="emergency" className='bg-zinc-900 border-zinc-800 '>emergency</option>
                               </select>
                          </div>
                          <div className='w-[60%] px-5 py-1 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
@@ -68,33 +68,33 @@ const AppointmentsTable = ({ patientData }) => {
 
                </div>
                {/* header */}
-               <div className={`grid w-full grid-cols-[1fr_1.5fr_.5fr_1fr_.7fr_1fr_1fr_.7fr_.8fr] gap-1 text-zinc-400 h-10 items-center`}>
-                    <p className='px-3 opacity-[.56] text-sm font-medium'>ID</p>
-                    <p className='px-3 opacity-[.56] text-sm font-medium'>NAME</p>
-                    <p className='px-3 opacity-[.56] text-sm font-medium'>AGE</p>
-                    <p className='px-3 opacity-[.56] text-sm font-medium'>GENDER</p>
-                    <p className='px-3 opacity-[.56] text-sm font-medium'>BED</p>
-                    <p className='px-3 opacity-[.56] text-sm font-medium'>DOCTOR</p>
-                    <p className='px-3 opacity-[.56] text-sm font-medium'>TIME</p>
-                    <p className='px-3 opacity-[.56] text-sm font-medium'>STATUS</p>
-                    <p className='px-3 opacity-[.56] text-sm font-medium'>CASE</p>
+               <div className={`grid w-full grid-cols-[2fr_2fr_.5fr_1fr_.7fr_1fr_1fr_.7fr_1fr] gap-1 text-zinc-400 h-10 items-center`}>
+                    <p className='opacity-[.56] text-sm font-medium'>ID</p>
+                    <p className='opacity-[.56] text-sm font-medium'>NAME</p>
+                    <p className='opacity-[.56] text-sm font-medium'>AGE</p>
+                    <p className='opacity-[.56] text-sm font-medium'>GENDER</p>
+                    <p className='opacity-[.56] text-sm font-medium'>BED</p>
+                    <p className='opacity-[.56] text-sm font-medium'>DOCTOR</p>
+                    <p className='opacity-[.56] text-sm font-medium'>DATE</p>
+                    <p className='opacity-[.56] text-sm font-medium'>STATUS</p>
+                    <p className='opacity-[.56] text-sm font-medium'>CASE</p>
                </div>
                {/* body */}
                <div className='w-full h-full relative overflow-y-scroll flex flex-col gap-y-7 text-zinc-300 py-5 '>
                     {filteredData.map((patient) => (
                          <div
-                              key={patient.id}
-                              className="grid w-full grid-cols-[1fr_1.5fr_.5fr_1fr_.7fr_1fr_1fr_.7fr_.8fr] gap-1 h-10 items-center hover:bg-zinc-800 transition-all duration-150 cursor-default"
+                              key={patient._id}
+                              className="grid w-full grid-cols-[2fr_2fr_.5fr_1fr_.7fr_1fr_1fr_.7fr_1fr] gap-1 h-10 items-center hover:bg-zinc-800 transition-all duration-150 cursor-default"
                          >
-                              <p className="px-3 text-zinc-400 ">{patient.id}</p>
-                              <p className="px-4 ">{patient.name}</p>
-                              <p className="px-4 text-zinc-400 ">{patient.age}</p>
-                              <p className="px-4 text-zinc-400 ">{patient.gender}</p>
-                              <p className="px-4 text-zinc-400 ">{patient.bed}</p>
-                              <p className="px-4 ">{patient.doctor}</p>
-                              <p className="px-4 ">{patient.time}</p>
-                              <p className={"px-4 text-zinc-400 "}>{patient.status}</p>
-                              <p className={`px-4 ${patient.case ==="emergency"?"text-red-500":"text-zinc-400 "}`}>{patient.case}</p>
+                              <p className=" text-zinc-400 ">{patient._id}</p>
+                              <p className=" ">{patient.userName}</p>
+                              <p className=" text-zinc-400 ">{patient.age}</p>
+                              <p className=" text-zinc-400 ">{patient.gender}</p>
+                              <p className=" text-zinc-400 ">{patient.bed}</p>
+                              <p className=" ">{patient.doctorName}</p>
+                              <p className=" ">{patient.dateTime}</p>
+                              <p className={" text-zinc-400 "}>{patient.status}</p>
+                              <p className={` ${patient.case ==="emergency"?"text-red-500":"text-zinc-400 "}`}>{patient.case}</p>
 
                          </div>
                     ))}

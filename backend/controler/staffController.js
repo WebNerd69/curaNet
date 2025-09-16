@@ -6,9 +6,9 @@ export const createStaff = async (req, res) => {
   try {
     const staff = new staffModel(req.body);
     const savedStaff = await staff.save();
-    res.status(201).json({ savedStaff, message: "Staff created successfully" });
+    res.status(201).json({ savedStaff, message: "Staff created successfully" , success:true});
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ message: error.message , success:false });
   }
 };
 // update profile
@@ -43,9 +43,9 @@ export const updatePay = async (req, res) => {
     const updatedStaff = await Promise.all(updatePromises);
     res
       .status(200)
-      .json({ updatedStaff, message: "Salaries updated successfully" });
+      .json({ updatedStaff, message: "Salaries updated successfully" , success:true });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ message: error.message , success:false });
   }
 };
 
@@ -66,9 +66,9 @@ export const fireStaff = async (req, res) => {
     const updatedStaff = await staffModel.findByIdAndDelete(
       staffId
     );
-    res.status(200).json(updatedStaff);
+    res.status(200).json({success:true,updatedStaff});
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ message: error.message ,success:false});
   }
 };
 
@@ -87,9 +87,9 @@ export const assignStaff = async (req, res) => {
     const updatedStaff = await Promise.all(updatePromises);
     res
       .status(200)
-      .json({ updatedStaff, message: "Shifts assigned successfully" });
+      .json({ updatedStaff, message: "Shifts assigned successfully" , success:true });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ message: error.message , success:false});
   }
 };
 
@@ -104,7 +104,7 @@ export const getStaffByEmail = async (req, res) => {
     if (!staff) {
       return res
         .status(404)
-        .json({ message: "Staff not found , user unregistered" });
+        .json({ message: "Staff not found , user unregistered" , success:false });
     } else {
       const payload = { id: staff._id, role: staff.role, email: staff.email }
       const token = jwt.sign(
@@ -112,9 +112,9 @@ export const getStaffByEmail = async (req, res) => {
         process.env.JWT_SECRET,
         { expiresIn: "1d" }
       );
-      res.status(200).json({ staff, token });
+      res.status(200).json({ staff, token , success:true });
     }
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: err.message , success:false });
   }
 };
