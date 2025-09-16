@@ -121,6 +121,7 @@ By default:
 
 3. Login with that email → Access **Admin Panel**.
 4. From the Admin Panel, you can create staff accounts (**Doctors, Receptionists**) who can then log in and access their respective dashboards.
+### ACCESSING RESTRICTED PANELS WITHOUT THE PRIOR STEPS WILL RESULT IN USER NOT GETTING LOGGED IN AND REDIRECTED TO LOGIN PAGE
 
 ---
 
@@ -144,6 +145,8 @@ By default:
 * 🧑‍⚕️ Doctor & staff management
 * 📊 Dashboard with filtered records
 * ⚡ Real-time notifications
+* 📈 Real-time data analytics (Under development)
+* 🪙 Integrated Payment system (Under Development)
 
 ---
 
@@ -152,7 +155,7 @@ By default:
 1. Clone this repository:
 
 ```bash
-git clone https://github.com/yourusername/curaNet.git
+git clone https://github.com/WebNerd69/curaNet
 ```
 
 2. Setup backend (env + run server).
