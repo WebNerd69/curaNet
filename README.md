@@ -1,11 +1,11 @@
----
+
 
 # 🌐 curaNet
 
 **Hospital Management Information System (HMIS)**
 📌 By **Rudra Pratap Roy** (IITGCS\_24061391)
 
----
+
 
 ## 🚀 Overview
 
