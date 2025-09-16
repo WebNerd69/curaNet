@@ -74,22 +74,22 @@ npm start
 
 ```bash
 # Reception Panel
-cd reception-frontend
+cd reception
 npm install
 npm run dev
 
 # Admin Panel
-cd admin-frontend
+cd admin
 npm install
 npm run dev
 
 # Doctor Panel
-cd doctor-frontend
+cd doctor
 npm install
 npm run dev
 
 # User Panel
-cd user-frontend
+cd user
 npm install
 npm run dev
 ```
