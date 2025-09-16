@@ -1,7 +1,3 @@
-Got it 👍 Since you’ve got **separate frontends for each role (Reception, Admin, Doctor, User)**, I’ll update the README to reflect that, remove the generic screenshot placeholders, and clearly document which panel runs on which port.
-
-Here’s the polished README 👇
-
 ---
 
 # 🌐 curaNet
