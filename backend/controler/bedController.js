@@ -80,12 +80,12 @@ export async function dischargePatient(req, res) {
           console.log(patientID)
           const user = await userModel.findOne({_id: patientID});
           if (!user) {
-               return res.status(404).json({ message: 'Patient not found' });
+               return res.status(404).json({ message: 'Patient not found' ,success:false});
           }
 
           const bed = await bedModel.findOne({ patientID });
           if (!bed) {
-               return res.status(404).json({ message: 'Bed not found for this patient' });
+               return res.status(404).json({ message: 'Bed not found for this patient' ,success:false});
           }
           bed.patientID = "";
           bed.patientName="";
@@ -96,8 +96,8 @@ export async function dischargePatient(req, res) {
           user.bedNumber = null;
           await user.save();
 
-          res.status(200).json({ message: 'Patient discharged successfully' });
+          res.status(200).json({ message: 'Patient discharged successfully' ,success:true});
      } catch (error) {
-          res.status(500).json({ message: error.message });
+          res.status(500).json({ message: error.message , success:false });
      }
 }

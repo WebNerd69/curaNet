@@ -27,6 +27,7 @@ const ReceptionContextProvider = (props) => {
                     toast.error("No data found")
                }
                setPatientList(res.data.users)
+               console.log(res.data.users)
           } catch (error) {
                console.log(error)
           }

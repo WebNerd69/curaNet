@@ -17,6 +17,7 @@ const BookAppointment = () => {
    // submit function
    const submit = async(e) => {
       try {
+         console.log(e)
          const res = await axios.post(`${BACKEND_URI}appointment/create`,{
             userId:e.id,
             userName:e.name,
@@ -203,7 +204,7 @@ const BookAppointment = () => {
                               message: "Age can only contain numbers",
                            },
                         })}
-                        id='phone'
+                        id='age'
                         className='bg-transparent w-full outline-none '
                         type='number'
                         placeholder='14' />

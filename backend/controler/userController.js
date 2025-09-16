@@ -30,16 +30,20 @@ export const updateUser = async (req, res) => {
 
 // Get user by ID
 export const getUserById = async (req, res) => {
-     try {
-          const user = await userModel.findById(req.params.id);
-          if (!user) {
-               return res.status(404).json({ success:false , message: "User not found" });
-          }
-          res.status(200).json({success:true , user});
-     } catch (error) {
-          res.status(400).json({success:false, message: error.message });
-     }
+  try {
+    const { id } = req.params;  // param from URL
+    const user = await userModel.findById(id); // cleaner
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    res.status(200).json({ success: true, user });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
+  }
 };
+
 // Get user by email
 export const getUserByEmail = async (req, res) => {
   try {

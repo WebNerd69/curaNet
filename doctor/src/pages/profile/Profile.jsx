@@ -1,6 +1,8 @@
 import { Eye, EyeClosed } from 'lucide-react';
 import React from 'react'
+import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import { DoctorContext } from '../../context/DoctorContext';
 
 const Profile = () => {
     const { register, handleSubmit, formState: { errors, isValid, isSubmitting }, setValue } = useForm(
@@ -10,7 +12,7 @@ const Profile = () => {
         }
     );
 
-
+    const {userData} = useContext(DoctorContext)
 
     const submit = (data) => {
         console.log(data)
@@ -48,7 +50,7 @@ const Profile = () => {
                             type="text"
                             className="bg-transparent w-full outline-none"
                             placeholder="Rudra Pratap Roy"
-                            value={'Rudra Pratap Roy'}
+                            value={userData.name?userData.name:'Rudra Pratap Roy'}
                             disabled
                         />
                     </div>
@@ -80,7 +82,7 @@ const Profile = () => {
                                     type='email'
                                     className='bg-transparent w-full outline-none '
                                     placeholder='rroy64330@gmail.com'
-                                    value={'rroy64330@gmail.com'}
+                                    value={userData.email?userData.email:'rroy64330@gmail.com'}
                                     disabled
                                 />
 
@@ -112,7 +114,7 @@ const Profile = () => {
                                     className='bg-transparent w-full outline-none '
                                     type='tel'
                                     placeholder='9775270246'
-                                    value={'9775270246'}
+                                    value={userData.phone?userData.phone:'9775270246'}
                                     disabled
                                 />
                             </div>
@@ -121,13 +123,13 @@ const Profile = () => {
                         </div>
                     </div>
 
-                    {/* submit button */}
+                    {/* submit button
                     <button
                         type="button"
                         className='px-7 py-3 border border-zinc-800 rounded-xl font-semibold cursor-pointer disabled:opacity-[.56] disabled:cursor-not-allowed hover:bg-red-500'
                     >
                         {isSubmitting ? "Logging out ..." : "Logout"}
-                    </button>
+                    </button> */}
                 </form>
             </div>
         </div>

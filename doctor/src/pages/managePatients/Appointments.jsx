@@ -1,10 +1,22 @@
 import React from 'react'
 import AppointmentCard from '../../components/AppointmentCard'
+import { useState } from 'react'
+import { useContext } from 'react'
+import { DoctorContext } from '../../context/DoctorContext'
 
 const Appointments = () => {
+  const {appointments} = useContext(DoctorContext)
+  console.log("appointments" , appointments)
   return (
     <div className='w-full h-[100vh] flex items-center text-white p-10 overflow-auto flex-col gap-y-10'>
-      <AppointmentCard name={"John sharma"} age={69} gender={"female"} phone={"1234567890"} status={"pending"} id={"14cas24c4ca2cac"}/>
+      {
+        appointments.map((item,index)=>{
+          return(
+            <AppointmentCard gender={item.gender} name={item.userName} age={item.age} phone={item.phone} status={item.status} key={index} id={item._id} userId={item.userId} />
+
+          )
+        })
+      }
     </div>
   )
 }

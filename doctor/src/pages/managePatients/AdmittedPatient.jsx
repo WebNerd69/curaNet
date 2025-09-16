@@ -1,8 +1,15 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
-import { useForm } from 'react-hook-form'
+import { useContext } from 'react';
+import { useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
+import { DoctorContext } from '../../context/DoctorContext';
+import axios from "axios"
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { toast } from "react-toastify"
 const AdmittedPatient = () => {
-     const { id } = useParams()
+     const { userId } = useParams()
+     const { BACKEND_URI, userData, doctorToken } = useContext(DoctorContext)
      // react-hook-forms
      const { register, handleSubmit, formState: { errors, isValid, isSubmitting }, setValue } = useForm(
           {
@@ -10,15 +17,110 @@ const AdmittedPatient = () => {
                reValidateMode: "onChange", // re-checks on every change
           }
      );
+     const [isLoading, setIsLoading] = useState(true)
+     const [userFound, setUserFound] = useState()
+     const [patientData, setPatientData] = useState()
 
-     // submit function
-     const submit = (e) => {
-          console.log(e)
+     const fetchPatientData = async () => {
+          // console.log(id)
+          try {
+               const res = await axios.get(`${BACKEND_URI}user/${userId}`)
+               console.log("response", res.data)
+               if (!res.data.success) {
+                    setIsLoading(false)
+                    setUserFound(false)
+               }
+               setUserFound(true)
+               setIsLoading(false)
+               setPatientData(res.data.user)
+          } catch (error) {
+               setIsLoading(false)
+               console.log(error)
+          }
      }
+
+     const setRegisterData = () => {
+          try {
+               setValue("userId", userId)
+               setValue("userName", patientData.name)
+               setValue("doctorId", userData._id)
+               setValue("doctorName", userData.name)
+          } catch (error) {
+               console.log(error)
+          }
+     }
+
+
+     useEffect(() => {
+          fetchPatientData()
+     }, [BACKEND_URI])
+
+
+     useEffect(() => {
+          setRegisterData()
+     }, [userFound])
+
+     
+     // submit function
+     const submit = async (e) => {
+          console.log(e)
+          try {
+               const res = await axios.post(`${BACKEND_URI}report/create-report`, {
+                    userId: e.userId,
+                    userName: e.userName,
+                    doctorId: e.doctorId,
+                    doctorName: e.doctorName,
+                    report: e.report,
+                    prescription: e.prescription,
+                    tests: e.tests
+
+               }, {
+                    headers: {
+                         doctorid: userData._id,
+                         token: doctorToken,
+                         doctoremail: userData.email
+                    }
+               })
+               console.log(res)
+               if(!res.data.success){
+                    console.log(res.data)
+                    toast.error(res.data.message)
+               }
+
+               const res2 = await axios.post(`${BACKEND_URI}bed/discharge-patient`,{
+                    patientID : userId
+               },{
+                    headers:{
+                         token:doctorToken,
+                         doctoremail:userData.email,
+                         doctorid:userData._id
+                    }
+               })
+               console.log(res2)
+               if(!res2.data.success){
+                    console.log(res2.data)
+                    toast.error(res2.data.message)
+               }
+
+               toast.success("Report added successfully")
+               toast.success("Report added successfully")
+          } catch (error) {
+               console.log(error)
+          }
+     }
+
+     if (isLoading) {
+          return (
+               <div className='w-full h-full bg-zinc-950 text-white flex justify-center items-center text-xl'>
+                    <p>Loading ...</p>
+               </div>
+          )
+     }
+
 
      return (
           <div className='w-full h-full p-10 text-white flex flex-col'>
-               <form onSubmit={handleSubmit(submit)} className='w-full flex-col flex gap-5 items-center gap-y-10'>
+               {userFound?(<form onSubmit={handleSubmit(submit)} className='w-full flex-col flex gap-5 items-center gap-y-10'>
                     <div className='w-full grid grid-cols-[2fr_.5fr_.5fr_1fr] gap-5'>
 
                          <div className='w-full px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
@@ -29,7 +131,7 @@ const AdmittedPatient = () => {
                                    type="text"
                                    className="bg-transparent w-full outline-none"
 
-                              >Rudra Pratap Roy </p>
+                              >{patientData.name}</p>
                          </div>
                          <div className='w-full px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
 
@@ -38,7 +140,7 @@ const AdmittedPatient = () => {
                                    id="name"
                                    className="bg-transparent w-full outline-none"
 
-                              >18</p>
+                              >{patientData.age}</p>
                          </div>
                          <div className='w-full px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
 
@@ -47,7 +149,7 @@ const AdmittedPatient = () => {
                                    id="name"
                                    className="bg-transparent w-full outline-none"
 
-                              >male</p>
+                              >{patientData.gender}</p>
                          </div>
                          <div className='w-full px-5 py-3 flex items-center relative rounded-xl border-2 border-zinc-800 bg-zinc-900'>
 
@@ -56,7 +158,7 @@ const AdmittedPatient = () => {
                                    id="name"
                                    className="bg-transparent w-full outline-none"
 
-                              >9775270245</p>
+                              >{patientData.phone}</p>
                          </div>
                     </div>
                     {/* Textarea */}
@@ -114,29 +216,32 @@ const AdmittedPatient = () => {
                          />
                     </div>
                     {errors.prescription && <p className='text-sm text-red-500 -mt-3 w-[100%]'>{errors.prescription.message}</p>}
-                    <div className='flex w-[30%] justify-between'>
+                     <div className='flex w-[30%] justify-center'>
 
                          <button
                               type="submit"
                               className='px-7 py-3 border border-zinc-800 rounded-xl font-semibold cursor-pointer disabled:opacity-[.56] disabled:cursor-not-allowed'
                               disabled={!isValid || isSubmitting}
                          >
-                              {isSubmitting ? "Submitting ..." : "Submit"}
-                         </button>
-
-                         <button
-                              type="button"
-                              className='px-7 py-3 border border-zinc-800 rounded-xl font-semibold cursor-pointer disabled:opacity-[.56] disabled:cursor-not-allowed'
-                              disabled={!isValid || isSubmitting}
-                         >
-                              {isSubmitting ? "Discharging ..." : "Discharge"}
+                              {isSubmitting ? "Discharging ..." : "Discharge patient and submit report"}
                          </button>
 
 
                     </div>
 
-               </form>
+
+
+
+               </form>):
+               (
+                    <div className='w-full h-full flex items-center justify-center text-white text-xl font-semibold'>
+                         <p>
+                              User not found...
+                         </p>
+                    </div>
+               )}
           </div>
+
      )
 }
 
