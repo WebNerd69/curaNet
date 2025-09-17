@@ -105,7 +105,7 @@ By default:
 ### 👨‍💼 Admin / Reception / Doctor Panels
 
 1. Navigate to your **MongoDB cluster**.
-2. Insert the following data into the **staff collection**:
+2. Insert the following data into the **staffData collection**:
 
 ```json
 {
