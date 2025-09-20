@@ -20,7 +20,7 @@ const UserContextProvider = (props)=>{
      
      // variables
 
-     const BACKEND_URI = "https://curanet-backend-5m6o.onrender.com"
+     const BACKEND_URI = "https://curanet-backend-5m6o.onrender.com/api/"
      const value = {
           // setter variables
           setUserData,
