@@ -95,7 +95,7 @@ const genderData_test =[
   { date: "2025-08-25", Males: 3351, Females: 3100 }
 ];
 
-const BACKEND_URI = "http://localhost:6900/api/"
+const BACKEND_URI = "https://curanet-backend-5m6o.onrender.com/api/"
 
 
 const AdminContextProvider = (props) => {
