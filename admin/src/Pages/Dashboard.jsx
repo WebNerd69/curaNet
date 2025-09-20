@@ -1,6 +1,6 @@
 import React from 'react'
 import GenderDataCard from '../components/GenderDataCard';
-import NumberCard from '../components/numberCard';
+import NumberCard from '../components/NumberCard';
 import AgeDataCard from '../components/AgeDataCard';
 import Appointments from '../components/Appointments';
 
