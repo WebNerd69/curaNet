@@ -18,7 +18,7 @@ const ReceptionContextProvider = (props) => {
      const [receptionistToken, setReceptionistToken] = useState()
 
 
-     const BACKEND_URI = "http://localhost:6900/api/"
+     const BACKEND_URI = "https://curanet-backend-5m6o.onrender.com/api/"
 
      const fetchPatients = async () => {
           try {
