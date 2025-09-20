@@ -12,6 +12,16 @@
 curaNet is a **Hospital Management Information System (HMIS)** built to streamline hospital operations. It provides dedicated panels for **Admins, Receptionists, Doctors, and Patients**, ensuring smooth workflows such as **appointments, staff management, payroll, patient records, and bed allocation**.
 
 ---
+## 🌍 Deployed Links
+
+Here are the deployed environments for **Curanet**:
+
+- 🏥 **User App** → [Curanet User](https://curanet-git-main-webnerd69s-projects.vercel.app/)
+- 🧑‍⚕️ **Doctor App** → [Curanet Doctor](https://curanet-doctor-git-main-webnerd69s-projects.vercel.app/)
+- 🖥️ **Admin App** → [Curanet Admin](https://curanet-admin-git-main-webnerd69s-projects.vercel.app/)
+- 📋 **Reception App** → [Curanet Reception](https://curanet-reception-git-main-webnerd69s-projects.vercel.app/)
+
+---
 
 ## 🛠️ Tech Stack
 
