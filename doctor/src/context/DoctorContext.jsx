@@ -8,7 +8,7 @@ const DoctorProvider = (props) => {
   const [appointments,setAppointments] =useState([])
 
 
-  const BACKEND_URI = "http://localhost:6900/api/";
+  const BACKEND_URI = "https://curanet-backend-5m6o.onrender.com/api/";
 
   // ✅ define the value object properly
   const value = {
